@@ -1,0 +1,16 @@
+# Grabaciones de llamadas (archivos pesados, no se versionan)
+grabaciones/
+
+# Variables de entorno y secretos
+.env
+.env.local
+.env.*.local
+
+# Dependencias / build
+node_modules/
+.netlify/
+
+# Sistema
+.DS_Store
+Thumbs.db
+.claude/

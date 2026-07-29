@@ -1,0 +1,9 @@
+{
+  "name": "trisma-proposals",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio estático de propuestas comerciales de Trisma Soluciones, generadas a partir de plantilla_propuestas.html.",
+  "engines": {
+    "node": ">=18"
+  }
+}

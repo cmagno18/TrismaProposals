@@ -1,0 +1,62 @@
+Crea una página web html one-pager que funcione como plantilla base de presentación de propuestas comerciales. Es solo la base estructural, sin datos de una propuesta real. En el futuro esta plantilla se duplicará y rellenará automáticamente con IA, así que todo el contenido editable debe estar marcado con placeholders en formato [VARIABLE] (corchetes, en MAYÚSCULAS, con guion bajo si es compuesto). Ejemplos: [NOMBRE_CLIENTE], [NOMBRE_PROYECTO], [PRECIO], [PARRAFO_ENTENDIMIENTO].
+Regla de oro de los placeholders: todo texto que cambie de una propuesta a otra debe ser un [VARIABLE] autodescriptivo, nunca texto de ejemplo "quemado". Lo único fijo es la estructura, los títulos de sección y los textos de interfaz (botones, etiquetas). Para bloques largos (párrafos, listas), usa un único placeholder por bloque (ej. [LISTA_ALCANCE], [PARRAFO_VISION]) para que la IA inyecte el contenido completo de una sola vez.
+
+Descripción de mi negocio
+Trisma Soluciones es una firma consultora y operativa especializada en la optimización y aceleración del ciclo de caja y gestión estratégica de cartera para empresas (colegios, fondos de empleados, PYMES y sector retail). Su modelo combina disciplina operativa, analítica de segmentación, inteligencia artificial y automatización de procesos para convertir "ingreso en papel" en caja real, operando bajo un esquema por resultados (comisión sobre recaudo).
+- Nombre: Trisma Soluciones
+- Ubicación: Cali, Colombia pero con cobertura a nivel nacional
+- Correo electrónico: comercial@trisma.com
+- Sitio web: www.trisma.com
+
+Diseño
+- Tipografías: 
+  - Encabezados (h1, h2, h3): 'Poppins' (pesos 400, 600, 700), sans-serif.
+  - Texto de cuerpo / párrafos: 'Lato' (pesos 400, 700), sans-serif.
+  - Importación Google Fonts: https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap
+- Paleta de colores:
+  - Color Principal (Hero, Encabezados, Fondos Oscuros): Azul Marino Oscuro `#0A2540`
+  - Color de Acento / Secundario: Dorado `#E3B341` (utilizado para líneas destacadas, acentos decorativos, bordes e iconos)
+  - Texto Principal (Cuerpo sobre fondo claro): `#425466`
+  - Fondos de Tarjetas / Superficies Claras: `#F8FAFC`, `#FFFFFF`
+  - Bordes y Divisores: `#E2E8F0`, `#CBD5E1`
+  - Texto Secundario / Transparencias: `rgba(255, 255, 255, 0.7)` y `#94A3B8`
+- Estilo Visual y Elementos Gráficos:
+  - Tarjetas (cards/tiles) limpias con bordes redondeados (`border-radius: 12px`), fondos neutros claros (`#F8FAFC`) y bordes sutiles (`#E2E8F0`).
+  - Líneas decorativas de acento dorado (`#E3B341`) a la izquierda o parte superior de títulos principales y tarjetas clave.
+  - Línea de tiempo (timeline) con conectores dorados y nodos circulares (`border-radius: 50%`).
+  - Hero y fondos oscuros elegantes con gradientes sobre el azul marino (`linear-gradient(135deg, rgba(10,37,64,0.95)...)`) e imágenes corporativas de alta calidad.
+
+Estructura de la página (9 secciones)
+Cada sección lleva su número estilizado (01–09) y placeholders donde corresponda.
+
+01. Portada / encabezado (Hero animado)
+Título de la propuesta personalizado: por ejemplo Propuesta de [TIPO_DE_SERVICIO] para [NOMBRE_CLIENTE] + subtítulo con [NOMBRE_PROYECTO]. Espacio para [LOGO] o nombre de la empresa, fecha [FECHA] y un CTA principal que ancle al cierre.
+
+02. Entendimos lo que buscas (scroll reveal)
+Párrafo cálido que resume el proyecto y refleja deseos y dolor del cliente con sus palabras. Placeholder: [PARRAFO_ENTENDIMIENTO]. Demuestra escucha y genera conexión inmediata.
+
+03. Nuestra visión para tu proyecto (scroll reveal + parallax sutil)
+Describe el concepto y la propuesta de valor, pintando la imagen del resultado final y el laceholder: [PARRAFO_VISION]. Opcional [IMAGEN_VISION] como capa con parallax.
+
+04. Qué incluye el servicio — Alcance (cards con stagger + hover)
+Lista clara de entregables en formato de cards o ítems. Placeholder: [LISTA_ALCANCE] (cada ítem con título corto + descripción opcional). Deja la estructura lista para 4–8 ítems que entren escalonados.
+
+05. Qué NO incluye — Exclusiones (scroll reveal, estilo diferenciado)
+Deja claro qué queda por fuera para evitar malentendidos. Placeholder: [LISTA_EXCLUSIONES]. Diferéncialo del alcance de forma sutil y sin que se sienta negativo; el tratamiento visual concreto lo resuelve el design system.
+
+06. Cómo trabajamos — Fases y tiempos (timeline animada con stagger)
+Etapas del proyecto en formato línea de tiempo o pasos, cada una con descripción breve y estimado de tiempo. Placeholder: [FASES] (cada fase: [FASE_NOMBRE], [FASE_DESCRIPCION], [FASE_TIEMPO]). Las fases entran escalonadas al hacer scroll; conector/línea que se "dibuja". Incluye nota editable de que los tiempos son aproximados: [NOTA_TIEMPOS].
+
+07. Inversión (scroll reveal con foco — momento clave)
+Presenta el precio con confianza, después de haber construido valor. Placeholder principal [PRECIO], con [FORMA_DE_PAGO] (ej. % al inicio + saldo por hitos). Es el momento de mayor jerarquía y peso visual de la página: entrada cuidada (fade + scale muy leve) y CTA cercano. El estilo de los elementos lo da el design system.
+
+08. Por qué confiar en nosotros (scroll reveal + microinteracciones)
+Diferenciadores, experiencia, enfoque, garantía de satisfacción/revisiones. Placeholders editables sin inventar logros: [DIFERENCIADOR_1], [DIFERENCIADOR_2], [DIFERENCIADOR_3], [GARANTIA], espacio opcional para [CREDENCIALES] y [TESTIMONIO]. Cards con hover sutil.
+
+09. Próximo paso — Cierre + CTA (entrada destacada + microinteracción en botón)
+Mensaje breve y motivador ([PARRAFO_CIERRE]) seguido del botón de contacto principal con [TEXTO_CTA] apuntando a [ENLACE_CONTACTO] (WhatsApp / agenda / correo). El botón debe tener la microinteracción de hover más cuidada de toda la página. Cierre con [NOMBRE_EMPRESA] y datos de contacto [CONTACTO].
+
+Entregable técnico
+Un solo archivo HTML llamado plantilla_propuestas.html autocontenido (HTML + CSS + JS embebidos) para que sea fácil de duplicar y rellenar.
+Código limpio, comentado en las zonas clave y con los placeholders [VARIABLE] claramente visibles y agrupados de forma predecible (idealmente un comentario al inicio listando todas las variables disponibles, para facilitar el reemplazo automático con IA).
+Sin dependencias pesadas; si usas alguna librería de animación, que sea ligera y justificada (idealmente solo CSS + IntersectionObserver nativo).

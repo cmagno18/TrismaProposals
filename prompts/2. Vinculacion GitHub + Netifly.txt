@@ -1,0 +1,43 @@
+Este será un proyecto en el que se crearán propuestas comerciales en páginas web siempre a partir de una plantilla base que encuentras en C:\DevProjects\TrismaProposals\plantilla_propuestas.html
+
+FEATURE PARA AGREGAR A TODAS LAS SIGUIENTES PROPUESTAS COMERCIALES CREADAS A PARTIR DE LA PLANTILLA:
+
+NOTIFICACIÓN POR TELEGRAM AL ABRIR LA PÁGINA
+
+Cada vez que la página sea abierta, debe enviar automáticamente una notificación (mensaje de texto) a Telegram usando los datos provistos en el archivo .env del proyecto:
+
+- Bot Token: **[TELEGRAM_BOT_TOKEN]**
+- Chat / user ID destino: **[TELEGRAM_USER_ID]**
+- Mensaje exacto a enviar: **"El cliente [NOMBRE_DEL_CLIENTE] acaba de abrir la propuesta comercial"**
+
+Estos datos no cambiarán para ninguna de las propuestas comerciales futuras pues corresponden al Telegram de la empresa.
+
+En local, **[TELEGRAM_BOT_TOKEN] y [TELEGRAM_USER_ID]** estarán en el archivo .env del proyecto
+
+En producción, **[TELEGRAM_BOT_TOKEN] y [TELEGRAM_USER_ID]** estarán como variables de entorno de Netifly
+
+Deja documentado para agentes que este feature (notificaciones via telegram) siempre debe ser implementado para cualquier propuesta comercial futura que se cree)
+
+La notificación debe dispararse al cargar la página. Tú te encargas de definir e implementar la forma técnica más adecuada y confiable para lograrlo; no necesito detalles técnicos, solo que funcione.
+
+La plantilla incluye un botón de CTA en la sección final, El número de whatsapp con el que se debe poder comunicar el usuario al presionar el botón de CTA final es +57 3028337824
+
+Prepara el proyecto con estas caracteristicas:
+
+Este es el repositorio del proyecto en github: https://github.com/cmagno18/TrismaProposals
+
+Actualmente el proyecto en Github está vacío, sin commits, haz el primer commit a main. 
+
+Prepara el proyecto para que sea desplegado en producción a traves de **Netifly** conectado a repo de Github.
+
+La carpeta “grabaciones” ya está dentro del proyecto - Esta carpeta contiene archivos grandes y por ello debe ser excluida del repositorio github.
+
+Crea un archivo .env para completar las variables de entorno para servicios que se utilizaran localmente al crear la propuesta comercial y servicios externos:
+
+**ASSEMBLYAI_API_KEY=**
+
+**TELEGRAM_BOT_TOKEN=**
+
+**TELEGRAM_USER_ID=**
+
+Haz las preguntas que consideres necesarias antes de ejecutar mi pedido.
