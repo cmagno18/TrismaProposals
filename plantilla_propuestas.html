@@ -853,7 +853,11 @@
   fetch('/.netlify/functions/notify-telegram', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ clientName: clientName }),
+    body: JSON.stringify({
+      clientName: clientName,
+      slug: window.location.pathname.replace(/^\//, ''),
+      timestamp: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
+    }),
     keepalive: true
   }).catch(function(){ /* best-effort: no debe afectar la carga de la página */ });
 })();

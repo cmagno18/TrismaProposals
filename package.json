@@ -4,6 +4,6 @@
   "private": true,
   "description": "Sitio estático de propuestas comerciales de Trisma Soluciones, generadas a partir de plantilla_propuestas.html.",
   "engines": {
-    "node": ">=18"
+    "node": ">=20.6"
   }
 }

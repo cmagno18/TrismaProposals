@@ -14,7 +14,7 @@ Estos datos no cambiarán para ninguna de las propuestas comerciales futuras pue
 
 En local, **[TELEGRAM_BOT_TOKEN] y [TELEGRAM_USER_ID]** estarán en el archivo .env del proyecto
 
-En producción, **[TELEGRAM_BOT_TOKEN] y [TELEGRAM_USER_ID]** estarán como variables de entorno de Netifly
+En producción, **[TELEGRAM_BOT_TOKEN] y [TELEGRAM_USER_ID]** estarán como variables de entorno de Netlify
 
 Deja documentado para agentes que este feature (notificaciones via telegram) siempre debe ser implementado para cualquier propuesta comercial futura que se cree)
 
@@ -28,7 +28,7 @@ Este es el repositorio del proyecto en github: https://github.com/cmagno18/Trism
 
 Actualmente el proyecto en Github está vacío, sin commits, haz el primer commit a main. 
 
-Prepara el proyecto para que sea desplegado en producción a traves de **Netifly** conectado a repo de Github.
+Prepara el proyecto para que sea desplegado en producción a traves de **Netlify** conectado a repo de Github.
 
 La carpeta “grabaciones” ya está dentro del proyecto - Esta carpeta contiene archivos grandes y por ello debe ser excluida del repositorio github.
 

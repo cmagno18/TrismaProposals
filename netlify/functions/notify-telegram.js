@@ -21,16 +21,30 @@ exports.handler = async function (event) {
   }
 
   let clientName = 'un cliente';
+  let slug = '';
+  let timestamp = '';
   try {
     const payload = JSON.parse(event.body || '{}');
     if (payload.clientName && String(payload.clientName).trim()) {
       clientName = String(payload.clientName).trim();
     }
+    if (payload.slug && String(payload.slug).trim()) {
+      slug = String(payload.slug).trim();
+    }
+    if (payload.timestamp && String(payload.timestamp).trim()) {
+      timestamp = String(payload.timestamp).trim();
+    }
   } catch (err) {
-    // body inválido: se envía igual con el nombre genérico
+    // body inválido: se envía igual con los datos genéricos disponibles
   }
 
-  const text = `El cliente ${clientName} acaba de abrir la propuesta comercial`;
+  const lines = [
+    'Propuesta Abierta',
+    `Cliente: ${clientName}`,
+  ];
+  if (timestamp) lines.push(`Fecha y hora: ${timestamp}`);
+  if (slug) lines.push(`Propuesta: ${slug}`);
+  const text = lines.join('\n');
 
   try {
     const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {

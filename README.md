@@ -9,24 +9,38 @@ Ver [AGENTS.md](AGENTS.md) para el detalle de convenciones,
 placeholders y el feature obligatorio de notificación por Telegram
 que debe incluir toda propuesta nueva.
 
+Para generar una propuesta nueva, usar el skill de Claude Code
+`/creador-propuestas-comerciales` (ver
+[.claude/skills/creador-propuestas-comerciales/SKILL.md](.claude/skills/creador-propuestas-comerciales/SKILL.md)),
+que automatiza todo el flujo a partir de una grabación, una
+transcripción o un prospecto del Excel de clientes.
+
 ## Estructura
 
 ```
 plantilla_propuestas.html      # Plantilla base
 propuestas/                    # Propuestas ya generadas
   nombre-cliente-yyyy-mm-dd.html
+grabaciones/                   # Grabaciones de llamadas (no versionado)
+transcripciones/               # Transcripciones generadas (no versionado)
+clientes/                      # Excel de prospectos (no versionado)
+scripts/
+  transcribe.js                 # Transcribe audio con AssemblyAI (diarización)
+  telegram-notify.js            # Envía la notificación de "propuesta creada"
 netlify/functions/
   notify-telegram.js           # Notifica a Telegram cuando se abre una propuesta
 netlify.toml                   # Configuración de Netlify
 .env.example                   # Variables de entorno requeridas
+.claude/skills/creador-propuestas-comerciales/
+  SKILL.md                      # Skill que automatiza la creación de propuestas
 ```
 
 ## Variables de entorno
 
 Copiar `.env.example` a `.env` y completar:
 
-- `ASSEMBLYAI_API_KEY` — transcripción de audio (scripts locales)
-- `TELEGRAM_BOT_TOKEN` / `TELEGRAM_USER_ID` — notificación de apertura de propuesta
+- `ASSEMBLYAI_API_KEY` — transcripción de audio (`scripts/transcribe.js`, solo local)
+- `TELEGRAM_BOT_TOKEN` / `TELEGRAM_USER_ID` — notificaciones de Telegram (creación y apertura de propuesta)
 
 En producción, estas mismas variables se configuran en Netlify:
 **Site settings → Environment variables**.

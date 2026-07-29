@@ -1,0 +1,42 @@
+Crea un Skill con las siguientes caracteristicas
+
+Comando para invocar el skill en el futuro: /creador-propuestas-comerciales
+
+Al invocar el skill, y en caso de que no se haya especificado, siempre preguntar:
+
+- Nombre del Cliente
+- Precio a poner en la propuesta comercial
+- Ubicación del archivo de la grabación de la videollamada con el cliente para hacer la transcripción.
+
+¿Qué hace el skill?
+
+Crea una propuesta comercial siguiendo la plantilla de propuestas comerciales del proyecto a partir de la transcripción y las siguientes instrucciones.
+
+Transcribe el video diarizado con la API Assembly AI, modelo Universal-3.5 pro, la ASSEMBLYAI_API_KEY está en el archivo .env del proyecto.
+
+## PASO 1 — ANÁLISIS DE LA TRANSCRIPCIÓN
+
+Lee la transcripción a fondo y extrae:
+
+1. **El proyecto concreto** que quiere el cliente (qué va a construir, remodelar o diseñar, tipo de espacio, ubicación si se menciona, metros aproximados si aparecen).
+2. **Los deseos profundos**: qué sueña lograr, cómo quiere que se sienta el espacio, qué estilo o referencias mencionó.
+3. **Los dolores y frustraciones**: qué le preocupa, qué malas experiencias tuvo antes, qué le da miedo (presupuesto, demoras, no ser escuchado, etc.).
+4. **Las objeciones o dudas** que dejó entrever.
+5. **Las palabras y frases textuales** del cliente que reflejan su emoción (úsalas más adelante; la gente se convence cuando se siente reflejada en su propio lenguaje).
+6. **Restricciones**: presupuesto, tiempos, condiciones del terreno, normativa que se haya nombrado.
+
+La propuesta debe sentirse hecha a la medida, como si el arquitecto hubiera escuchado de verdad cada palabra.
+
+## PASO 2 — CONSTRUCCIÓN DE LA PROPUESTA (estructura de la página)
+
+Genera una página siguiendo LA PLANTILLA DE PROPUESTAS COMERCIALES QUE YA TIENE EL PROYECTO en plantilla_propuestas.html, completando todas las secciones y placeholders.
+
+El slug de las propuestas comerciales siempre debe ser /propuestas/nombre-cliente-yyyy-mm-dd (Ejemplo: Propuesta Banco ABC del 29 de Julio de 2026: /propuestas/banco-abc-2026-07-29)
+
+## PASO 3 - Confirma la ejecución y creación de la propuesta comercial y devuelve el slug con el que quedó creada.
+
+### IMPORTANTE:
+
+- Asegúrate que la funcionalidad de notificaciones via Telegram quede funcional en la propuesta comercial que vas a crear.
+- El skill, antes de avanzar, debe verificar que tenga toda la información disponible para crear la propuesta comercial.
+- Haz las preguntas necesarias para construir el skill de la mejor manera posible en caso de que te haga falta información.

@@ -1,5 +1,7 @@
-# Grabaciones de llamadas (archivos pesados, no se versionan)
+# Grabaciones, transcripciones y datos de prospectos (contenido sensible de clientes, no se versiona)
 grabaciones/
+transcripciones/
+clientes/
 
 # Variables de entorno y secretos
 .env
@@ -13,4 +15,4 @@ node_modules/
 # Sistema
 .DS_Store
 Thumbs.db
-.claude/
+.claude/settings.local.json

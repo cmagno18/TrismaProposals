@@ -1,0 +1,159 @@
+---
+name: creador-propuestas-comerciales
+description: Skill para generar propuestas comerciales hiper-personalizadas en HTML para Trisma Soluciones a partir de grabaciones de reuniones, transcripciones o datos de prospectos en Excel.
+---
+
+# Skill: Creador de Propuestas Comerciales - Trisma Soluciones
+
+Comando para invocar el skill:
+`/creador-propuestas-comerciales`
+
+---
+
+## PARAMETROS Y RECOPILACIÓN INICIAL DE INFORMACIÓN
+
+Al invocar el skill, verifica los argumentos proporcionados. Si alguno falta, solicita la información al usuario en consola de forma interactiva:
+
+1. **Nombre o Razón Social del Cliente**: Nombre comercial/Razón social a quien se dirige la propuesta.
+2. **Precio y Esquema Comercial**: Valor de la propuesta o esquema financiero (ej: % de comisión sobre recaudo, retainer fijo o esquema mixto).
+3. **Origen de la Información (Escenario)**:
+   - **Opción A (Grabación)**: Archivo de audio/video ubicado en la carpeta `grabaciones/`.
+   - **Opción B (Transcripción)**: Archivo de texto plano o markdown ubicado en la carpeta `transcripciones/`.
+   - **Opción C (Excel / Prospecto)**: Archivo de base de datos en Excel ubicado en la carpeta `clientes/`.
+
+---
+
+## LÓGICA DE PROCESAMIENTO SEGÚN ESCENARIO
+
+Identifica el escenario seleccionado y ejecuta el paso correspondiente:
+
+---
+
+### ESCENARIO 1: PROCESAMIENTO DE GRABACIÓN (`grabaciones/`)
+
+1. Transcribe el archivo de audio/video ubicado en `grabaciones/` utilizando la API de **AssemblyAI** (Modelo `Universal-3.5 pro` con diarización activada). La API Key se debe leer del archivo `.env` (`ASSEMBLYAI_API_KEY`).
+2. Guarda la transcripción generada en la carpeta `transcripciones/` para referencia futura.
+3. Analiza la transcripción según el **PASO 1 (Análisis Cualitativo y Mapeo de Buyer Personas)**.
+
+---
+
+### ESCENARIO 2: PROCESAMIENTO DE TRANSCRIPCIÓN DIRECTA (`transcripciones/`)
+
+1. Lee el archivo de transcripción indicado desde la carpeta `transcripciones/`.
+2. Analiza la transcripción según el **PASO 1 (Análisis Cualitativo y Mapeo de Buyer Personas)**.
+
+---
+
+### ESCENARIO 3: ANÁLISIS SECTORIAL Y DESDE EXCEL (`clientes/`)
+
+Aplica el **Cerebro Estratégico** para prospectos sin reunión previa:
+
+#### 1. Búsqueda y Validación Flexible de Clientes
+- Carga el archivo indicado en la carpeta `clientes/`.
+- Busca la fila correspondiente por **ID/Número de fila** o por **Nombre/Razón Social**.
+- **Coincidencias Múltiples**: Si encuentras más de un cliente con nombres similares, lista las coincidencias al usuario con su ID y pregunta cuál desea procesar.
+- **Sin Coincidencias**: Si el cliente o ID no existe en el archivo, notifica al usuario que el cliente no se encuentra en la base de datos y detén la ejecución. **PROHIBIDO inventar clientes o tomar datos de filas contiguas.**
+
+#### 2. Detección de Sector y Regla de Interacción
+- Busca en las columnas del archivo palabras clave como `ACTIVIDAD ECONOMICA`, `SECTOR`, `CIIU`, `INDUSTRIA` o `DESCRIPCIÓN`.
+- **Falta de Información**: Si la columna de sector no existe, está vacía o es ambigua:
+  - **Pregunta explícitamente al usuario**: *"No encontré el sector o actividad económica para [Nombre Cliente]. Por favor indícame el sector o escribe 'omitir' para usar el enfoque genérico de Trisma."*
+  - Si el usuario **NO proporciona el sector** o escribe 'omitir', **NO inventes ni adivines el sector**. Procede a redactar un diagnóstico genérico enfocado exclusivamente en las capacidades universales de Trisma (conversión de liquidez en papel a caja real, eficiencia operativa y gobernanza de recaudo).
+- Si obtienes el sector, normalízalo a un Macro-Sector coherente (Ej: "Banca", "Retail", "Educación", "Propiedad Horizontal", "Alimenticio", "Infraestructura").
+
+#### 3. Mapeo de Buyer Personas y Redacción Diagnóstica
+Cruza el sector y contexto con los 4 Buyer Personas de Trisma:
+- *Ricardo (PYME)*: Iliquidez en papel, costo de crédito bancario, carga operativa por cobrar.
+- *Andrés (Retail/CC)*: Ineficiencia en volumen masivo, DSO alto, riesgo de vacancia.
+- *Jorge / Marta (Educación)*: Riesgo reputacional, mora en pensiones, falta de trazabilidad.
+- *Gloria (Propiedad Horizontal)*: Conflicto vecinal, presión del consejo, falta de respaldo técnico.
+
+Redacta dos (2) párrafos diagnósticos:
+- **Párrafo 1 (`[PARRAFO_ENTENDIMIENTO]`)**: Menciona la Razón Social del cliente, el sector (si está verificado), su robustez operativa y la oportunidad estratégica de optimización de caja.
+- **Párrafo 2 (`[PARRAFO_VISION]`)**: Conexión entre el dolor del cliente y la solución de Trisma. NO menciones el nombre del cliente en este párrafo.
+
+**REGLA DE PRIVACIDAD FINANCIERA**: Queda ESTRICTAMENTE PROHIBIDO mencionar cifras financieras exactas internas (Ingresos, Razón Corriente, Utilidades) dentro de los párrafos del diagnóstico.
+
+---
+
+## PASO 1 — ANÁLISIS CUALITATIVO Y MAPEO DE BUYER PERSONAS (Aplica para Escenarios 1 y 2)
+
+Extrae de la transcripción:
+1. **El proyecto/necesidad concreta**: Qué línea de cartera o ciclo de ingresos necesita optimizar el cliente.
+2. **Deseos profundos**: Qué busca lograr (tranquilidad en nómina, reducción de DSO, recuperar caja sin perder clientes).
+3. **Dolores y frustraciones**: Malas experiencias previas con agencias de cobranza tradicional, desgaste operativo, falta de visibilidad en datos.
+4. **Objeciones o dudas**: Preocupación por riesgo reputacional, comisiones o integración tecnológica.
+5. **Citas textuales del cliente**: Frases con carga emocional que reflejen sus preocupaciones para usarlas en `[PARRAFO_ENTENDIMIENTO]`.
+6. **Restricciones**: Tiempos, volumen de facturas, sistemas ERP actuales.
+7. **Mapeo de Buyer Personas**: Cruza las necesidades y el sector detectado en la conversación con los 4 perfiles de Trisma (*Ricardo/PYME*, *Andrés/Retail*, *Jorge-Marta/Educación*, *Gloria/PH*) para redactar `[PARRAFO_ENTENDIMIENTO]` y `[PARRAFO_VISION]` alineados exactamente al dolor identificado del cliente.
+
+La propuesta debe sentirse hecha a la medida, como si el consultor/asesor hubiera escuchado de verdad cada palabra del cliente.
+
+---
+
+## PROTOCOLO DE VALIDACIÓN Y CHECKLIST PREVIO (APLICA A TODOS LOS ESCENARIOS)
+
+Antes de generar el código y renderizar la propuesta, realiza un chequeo interno y presenta un resumen al usuario:
+
+1. Muestra un resumen de los datos extraídos/procesados:
+   - Cliente: `[Nombre del Cliente]`
+   - Esquema Comercial: `[Precio / Comisión]`
+   - Sector / Contexto: `[Sector detectado u Omitido]`
+   - Buyer Persona Identificado: `[Perfil Trisma asignado]`
+   - Párrafo de Entendimiento: `[Resumen breve]`
+   - Párrafo de Visión: `[Resumen breve]`
+2. **Haz la siguiente pregunta obligatoria al usuario**:
+   > *"Tengo toda la información validada para crear la propuesta comercial de **[Nombre Cliente]**. ¿Deseas hacer alguna aclaración, ajuste o añadir un dato adicional antes de proceder?"*
+3. Espera la respuesta del usuario. Si solicita cambios, ajústalos. Si da su confirmación, procede al renderizado.
+
+**REGLA ANTI-ALUCINACIÓN**: Está terminantemente prohibido asumir, adivinar o inventar información que no esté en la grabación, la transcripción, el Excel o las respuestas explícitas del usuario.
+
+---
+
+## PASO 2 — CONSTRUCCIÓN Y RENDERIZADO DE LA PROPUESTA
+
+1. Lee la plantilla base en `plantilla_propuestas.html`.
+2. Inyecta la información completando todos los placeholders con formato `[VARIABLE]`:
+   - `[NOMBRE_CLIENTE]`, `[NOMBRE_PROYECTO]`, `[FECHA]`, `[PARRAFO_ENTENDIMIENTO]`, `[PARRAFO_VISION]`, `[LISTA_ALCANCE]`, `[LISTA_EXCLUSIONES]`, `[FASES]`, `[PRECIO]`, `[FORMA_DE_PAGO]`, `[DIFERENCIADOR_1]`, `[DIFERENCIADOR_2]`, `[DIFERENCIADOR_3]`, `[PARRAFO_CIERRE]`, `[CONTACTO]` y cualquier otra variable que exista en la plantilla.
+3. **INYECCIÓN DE SCRIPT DE RASTREO EN TIEMPO REAL (TELEGRAM)**:
+   - En el HTML generado, inyecta un script JavaScript nativo ligero que se ejecute en el evento `DOMContentLoaded`.
+   - El script debe hacer una petición `fetch()` silenciosa en segundo plano a la API de Telegram (usando `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` del entorno `.env` o el webhook correspondiente).
+   - El mensaje enviado a Telegram cuando el cliente abra la página DEBE contener obligatoriamente:
+     * Nombre del cliente (`[NOMBRE_CLIENTE]`).
+     * Fecha y Hora exacta de la apertura (generadas por el cliente en tiempo real mediante JS).
+     * Slug / Ruta específica de la propuesta (`propuestas/nombre-cliente-yyyy-mm-dd.html`).
+4. Mantén intactos el Design System de Trisma y las secciones del ecosistema completo de la firma.
+5. Define la ruta y nombre del archivo de salida siguiendo la convención:
+   - Ruta: `propuestas/nombre-cliente-yyyy-mm-dd.html`
+   - Ejemplo: `propuestas/banco-abc-2026-07-29.html`
+6. Crea el directorio `propuestas/` si no existe y guarda la propuesta en el archivo especificado.
+
+---
+
+## PASO 3 — NOTIFICACIONES VÍA TELEGRAM
+
+El sistema maneja dos tipos de notificaciones independientes por Telegram:
+
+1. **Notificación de Creación de la Propuesta (Backend / Interna)**:
+   - Se ejecuta inmediatamente al finalizar el Skill tras guardar el archivo HTML.
+   - Contenido del mensaje: Propuesta Creada. Nombre del cliente, fecha de creación y Slug/Ruta del archivo generado.
+2. **Notificación de Apertura por el Cliente (Frontend / En vivo)**:
+   - Se dispara automáticamente cada vez que un cliente abre la propuesta HTML en su navegador mediante el script embebido en el Paso 2.
+   - Contenido del mensaje: Propuesta Abierta. Nombre del cliente, Fecha y Hora exacta de apertura y Slug específico de la propuesta.
+
+---
+
+## PASO 4 — CONFIRMACIÓN Y ENTREGA
+
+Una vez creada la propuesta y enviada la notificación de creación, muestra una respuesta profesional en consola:
+
+1. Confirma la ejecución exitosa.
+2. Devuelve el slug/ruta del archivo generado: `/propuestas/nombre-cliente-yyyy-mm-dd.html`.
+3. Muestra un breve resumen (máximo 40 palabras) de la solución configurada.
+
+
+### IMPORTANTE:
+
+- Asegúrate que la funcionalidad de notificaciones via Telegram quede funcional en la propuesta comercial que vas a crear.
+- El skill, antes de avanzar, debe verificar que tenga toda la información disponible para crear la propuesta comercial.
+- Haz las preguntas necesarias para construir el skill de la mejor manera posible en caso de que te haga falta información.
