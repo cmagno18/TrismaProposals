@@ -1226,6 +1226,11 @@
   }
 
   // ---- Subtle parallax for the vision image layer (section 03) ----
+  // La imagen es 120% del tamaño del contenedor (10% de sobra por lado,
+  // ver CSS .vision-media img) para poder desplazarse sin descubrir el
+  // fondo. El offset se limita (clamp) a ese mismo margen para que,
+  // sin importar la velocidad o posición del scroll, nunca se vea el
+  // fondo del contenedor detrás de la imagen.
   var parallaxImg = document.getElementById('parallaxImg');
   if (parallaxImg && !reduceMotion) {
     var ticking = false;
@@ -1233,7 +1238,8 @@
       if (!ticking) {
         window.requestAnimationFrame(function(){
           var rect = parallaxImg.closest('.vision-media').getBoundingClientRect();
-          var offset = rect.top * 0.08;
+          var maxOffset = rect.height * 0.08;
+          var offset = Math.max(-maxOffset, Math.min(maxOffset, rect.top * 0.08));
           parallaxImg.style.transform = 'translateY(' + offset + 'px)';
           ticking = false;
         });
