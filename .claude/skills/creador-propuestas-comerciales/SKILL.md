@@ -17,18 +17,25 @@ Antes de procesar nada, confirma que tienes estos tres datos. Si falta alguno, p
 
 1. **Nombre o razón social del cliente.**
 2. **Precio y esquema comercial** (ej: % de comisión sobre recaudo, retainer fijo, o esquema mixto).
-3. **Origen de la información** — cuál de los tres escenarios aplica:
+3. **Origen de la información** — cuál de los tres escenarios aplica, **y el nombre del archivo a usar**:
    - **A. Grabación** — archivo de audio/video en `grabaciones/`.
    - **B. Transcripción** — archivo de texto/markdown ya existente en `transcripciones/`.
    - **C. Excel de prospecto** — fila de un archivo en `clientes/`.
 
 Si el usuario ya dio estos datos en su mensaje (ej. "arma la propuesta para Banco ABC con 15% de comisión, usa la grabación llamada_banco_abc.mp3"), no se los vuelvas a preguntar — solo confirma cuáles faltan.
 
+**No explores por tu cuenta las carpetas `grabaciones/`, `transcripciones/` o `clientes/` para adivinar qué archivo usar.** Si el usuario indicó el escenario pero no el nombre del archivo, sigue esta regla antes de leer nada:
+
+- Lista (con `ls`/`Glob`, sin abrir ningún archivo) el contenido de la carpeta correspondiente al escenario elegido.
+- Si hay **15 archivos o menos**, muéstraselos al usuario en una lista numerada y pregúntale cuál quiere usar. Espera su respuesta — no elijas tú por él, ni siquiera si un nombre "se parece" al cliente.
+- Si hay **más de 15 archivos**, no los listes: dile al usuario que hay demasiados archivos en esa carpeta y pídele que te indique el nombre exacto.
+- En ningún caso leas el contenido de un archivo de esa carpeta hasta que el usuario haya confirmado explícitamente cuál es.
+
 ## 2. Procesar según el escenario
 
 ### Escenario A — Grabación (`grabaciones/`)
 
-1. Transcribe el archivo con AssemblyAI ejecutando:
+1. Transcribe el archivo ya confirmado con AssemblyAI ejecutando:
    ```
    node --env-file=.env scripts/transcribe.js "grabaciones/<archivo>" "transcripciones/<nombre-cliente>-<yyyy-mm-dd>.md"
    ```
@@ -37,14 +44,14 @@ Si el usuario ya dio estos datos en su mensaje (ej. "arma la propuesta para Banc
 
 ### Escenario B — Transcripción directa (`transcripciones/`)
 
-1. Lee el archivo indicado en `transcripciones/`.
+1. Lee el archivo ya confirmado en `transcripciones/`.
 2. Continúa con el **Paso 3 (Análisis Cualitativo)**.
 
 ### Escenario C — Excel de prospecto (`clientes/`)
 
-Aquí no hay conversación que analizar — el diagnóstico se construye a partir de datos estructurados y las heurísticas de sector. Sigue este orden estricto:
+Aquí no hay conversación que analizar — el diagnóstico se construye a partir de datos estructurados y las heurísticas de sector. El archivo Excel ya fue confirmado en el paso 1 (o listado/elegido siguiendo la regla de arriba si el usuario no lo especificó). Sigue este orden estricto:
 
-**a) Ubicar al cliente.** Usa el skill `xlsx` para leer el archivo indicado en `clientes/` y buscar la fila por ID/número de fila o por nombre/razón social.
+**a) Ubicar al cliente.** Usa el skill `xlsx` para leer el archivo confirmado en `clientes/` y buscar la fila por ID/número de fila o por nombre/razón social.
 - Si hay varias coincidencias parecidas, lístalas con su ID y pregunta al usuario cuál procesar.
 - Si no hay ninguna coincidencia, dile al usuario que el cliente no está en la base y **detente ahí**. No inventes un cliente ni tomes datos de una fila contigua "parecida" — un dato mal atribuido a la empresa equivocada es peor que no tener el dato.
 
@@ -105,7 +112,14 @@ Espera la respuesta. Si pide cambios, ajústalos y vuelve a confirmar. Solo con 
 1. Lee `plantilla_propuestas.html` completo, incluyendo el comentario inicial que lista todos los placeholders disponibles.
 2. Completa cada `[VARIABLE]` con la información validada: `[NOMBRE_CLIENTE]`, `[NOMBRE_PROYECTO]`, `[FECHA]`, `[PARRAFO_ENTENDIMIENTO]`, `[PARRAFO_VISION]`, `[LISTA_ALCANCE]`, `[LISTA_EXCLUSIONES]`, `[FASES]`, `[NOTA_TIEMPOS]`, `[PRECIO]`, `[FORMA_DE_PAGO]`, `[DIFERENCIADOR_1/2/3]`, `[GARANTIA]`, `[PARRAFO_CIERRE]`, `[TEXTO_CTA]`, `[NOMBRE_EMPRESA]`, `[CONTACTO]`, y cualquier otro que exista en la plantilla — no dejes ninguno sin reemplazar.
 3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`) y el `<script>` justo después que arma su mensaje prellenado, el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación de Telegram que va justo después — esos dos scripts ya están en la plantilla y ambos leen el nombre del cliente del mismo atributo `data-client-name`, así que **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro de ese atributo**, no reescribir ni duplicar ninguno de los dos scripts.
-4. Guarda el archivo en `propuestas/<nombre-cliente-slug>-<yyyy-mm-dd>.html`, donde el slug es el nombre del cliente en minúsculas separado por guiones y la fecha es la fecha de creación de la propuesta en formato `yyyy-mm-dd`. Ejemplo: propuesta para "Banco ABC" creada el 29 de julio de 2026 → `propuestas/banco-abc-2026-07-29.html`. Crea la carpeta `propuestas/` si no existe.
+4. Guarda el archivo en `propuestas/<slug>-<yyyymmdd><ID>.html`, donde:
+   - `<slug>` es el nombre del cliente en minúsculas separado por guiones.
+   - `<yyyymmdd>` es la fecha de creación de la propuesta, compacta (sin guiones).
+   - `<ID>` es un consecutivo de 2 dígitos (`01`, `02`, ...) que cuenta cuántas propuestas de **ese mismo cliente** ya existen **ese mismo día** — no es un consecutivo global del día, cada cliente lleva el suyo. Para calcularlo, lista `propuestas/` y busca archivos que empiecen con `<slug>-<yyyymmdd>`; toma el ID más alto que encuentres y súmale 1. Si no hay ninguno, empieza en `01`.
+
+   Ejemplo: primera propuesta de "Banco ABC" creada el 29 de julio de 2026 → `propuestas/banco-abc-2026072901.html`. Si ese mismo día se genera una segunda propuesta para Banco ABC, sería `propuestas/banco-abc-2026072902.html` — mientras que la primera propuesta de "Tienda XYZ" ese mismo día sería `propuestas/tienda-xyz-2026072901.html` (su propio consecutivo, no choca con el de Banco ABC).
+
+   Crea la carpeta `propuestas/` si no existe.
 
 ## 6. Notificaciones por Telegram
 

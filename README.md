@@ -20,7 +20,7 @@ transcripción o un prospecto del Excel de clientes.
 ```
 plantilla_propuestas.html      # Plantilla base
 propuestas/                    # Propuestas ya generadas
-  nombre-cliente-yyyy-mm-dd.html
+  slug-yyyymmddID.html          # ej: banco-abc-2026072901.html (ID = consecutivo del cliente ese día)
 grabaciones/                   # Grabaciones de llamadas (no versionado)
 transcripciones/               # Transcripciones generadas (no versionado)
 clientes/                      # Excel de prospectos (no versionado)

@@ -15,10 +15,14 @@ resultado:
 
 1. Duplicar `plantilla_propuestas.html`.
 2. Guardar la copia en `propuestas/` con el nombre:
-   `propuestas/nombre-cliente-yyyy-mm-dd.html`
-   (slug del cliente en minúsculas, separado por guiones; fecha en
-   formato `yyyy-mm-dd`). Ejemplo: propuesta para "Banco ABC" del
-   29 de julio de 2026 → `propuestas/banco-abc-2026-07-29.html`.
+   `propuestas/<slug>-<yyyymmdd><ID>.html`
+   (slug del cliente en minúsculas separado por guiones; fecha
+   compacta `yyyymmdd`; `ID` un consecutivo de 2 dígitos que empieza
+   en `01` y cuenta las propuestas **de ese mismo cliente** ese
+   mismo día — no es un consecutivo global). Ejemplo: primera
+   propuesta de "Banco ABC" el 29 de julio de 2026 →
+   `propuestas/banco-abc-2026072901.html`; una segunda propuesta del
+   mismo cliente ese día → `propuestas/banco-abc-2026072902.html`.
 3. Reemplazar todos los placeholders `[VARIABLE]` según el listado
    documentado en el comentario al inicio del `<body>` de la
    plantilla, usando la transcripción de la llamada de negocio como
