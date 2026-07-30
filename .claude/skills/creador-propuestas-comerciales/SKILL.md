@@ -141,12 +141,25 @@ Ejecútalo siempre, sin preguntar — es parte obligatoria de terminar el skill.
 
 **b) Notificación de "propuesta abierta"** (frontend, ya resuelta por la arquitectura del proyecto — no requiere que hagas nada adicional): el `<script>` heredado de la plantilla, más la función serverless `netlify/functions/notify-telegram.js`, se disparan solos cada vez que el cliente abre el HTML en su navegador, e incluyen nombre del cliente, fecha/hora exacta y la ruta del archivo. Tu única responsabilidad es no romper ese script al duplicar la plantilla (ver paso 5.3).
 
-## 7. Confirmación y entrega
+## 7. Commit, push y URL de Netlify
+
+Después de guardar el archivo y enviar la notificación de "propuesta creada":
+
+1. `git add propuestas/<archivo>.html` — solo ese archivo. No uses `git add -A` ni `git add .`, para no arrastrar al commit otros cambios sin relación que pueda haber en el working tree.
+2. `git commit -m "Agrega propuesta comercial para [Nombre Cliente]"` (o un mensaje similar en español, breve y descriptivo).
+3. `git push origin main`. Este paso puede fallar por problemas de red/conectividad del entorno (ya ha ocurrido antes en este proyecto) — si falla, no lo reintentes en bucle: avísale al usuario y dale el comando `git push origin main` para que lo corra él mismo desde su PowerShell.
+4. Reporta siempre la URL de Netlify de la propuesta, haya sido exitoso el push o no (el archivo ya quedó guardado localmente en cualquier caso):
+   ```
+   https://trismasoluciones.netlify.app/propuestas/<archivo>.html
+   ```
+   Ejemplo: `propuestas/motos-de-colombia-2026073001.html` → `https://trismasoluciones.netlify.app/propuestas/motos-de-colombia-2026073001.html`. Si el push fue exitoso, aclara que Netlify puede tardar uno o dos minutos en reflejar el cambio; si falló, aclara que la URL solo quedará disponible una vez el usuario haga el push manualmente.
+
+## 8. Confirmación y entrega
 
 Cierra con una respuesta profesional y breve en español:
 
-1. Confirma que la propuesta se creó y se notificó correctamente.
-2. Da la ruta del archivo generado: `propuestas/<archivo>.html`.
+1. Confirma que la propuesta se creó, se notificó y se subió correctamente (o si el push falló, dilo explícitamente).
+2. Da la ruta del archivo generado (`propuestas/<archivo>.html`) y la URL de Netlify del paso 7.
 3. Resume en máximo 40 palabras la solución configurada (esquema comercial, enfoque, buyer persona).
 
 ## Referencia rápida de scripts

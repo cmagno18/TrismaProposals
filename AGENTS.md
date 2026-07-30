@@ -166,8 +166,18 @@ de comisión sobre recaudo.
 El sitio es estático y se despliega en Netlify conectado a este
 repositorio de GitHub (`cmagno18/TrismaProposals`). No requiere paso
 de build (`netlify.toml` ya está configurado). Cada nueva propuesta
-subida a `propuestas/` queda disponible automáticamente en el deploy
-siguiente, en `https://<sitio>.netlify.app/propuestas/archivo.html`.
+subida a `propuestas/` y pusheada a `main` queda disponible
+automáticamente en el siguiente deploy de Netlify, en:
+
+```
+https://trismasoluciones.netlify.app/propuestas/<archivo>.html
+```
+
+Ejemplo: `propuestas/motos-de-colombia-2026073001.html` →
+`https://trismasoluciones.netlify.app/propuestas/motos-de-colombia-2026073001.html`.
+
+El skill `/creador-propuestas-comerciales` hace commit y push de cada
+propuesta nueva y reporta esta URL al terminar (ver su paso final).
 
 ## Carpetas excluidas del repositorio
 
