@@ -120,13 +120,17 @@ Espera la respuesta. Si pide cambios, ajústalos y vuelve a confirmar. Solo con 
    - Si el precio acordado es **0** (o el usuario indicó que no aplica mostrar cifra), elimina la sección 07 completa (`<section class="investment on-dark" id="inversion">...</section>`) del archivo generado. No la dejes vacía ni con "$0". Esto no rompe nada más: el botón "Ver la propuesta" del hero ya apunta a la sección 04, no a la 07.
    - La imagen de la sección 03 (`img/Imagen_01.jpg`) es fija, no un placeholder — pero al guardar el archivo en `propuestas/` (un nivel más abajo que la plantilla), ajusta su ruta a `../img/Imagen_01.jpg` para que siga resolviendo correctamente.
    - El logo "TRISMA." de la esquina superior izquierda del hero (`.hero-logo`) es fijo, no un placeholder. Al guardar el archivo en `propuestas/`, ajusta su enlace de `href="index.html"` a `href="../index.html"` para que siga apuntando a la página principal.
-3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`) y el `<script>` justo después que arma su mensaje prellenado, el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el botón "Ver la propuesta" del hero (enlaza a `#alcance`), el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación de Telegram que va justo después — esos dos scripts ya están en la plantilla y ambos leen el nombre del cliente del mismo atributo `data-client-name`, así que **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro de ese atributo**, no reescribir ni duplicar ninguno de los dos scripts.
-4. Guarda el archivo en `propuestas/<slug>-<yyyymmdd><ID>.html`, donde:
+3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`) y el `<script>` justo después que arma su mensaje prellenado, el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el botón "Ver la propuesta" del hero (enlaza a `#alcance`), el `<meta name="robots" content="noindex, nofollow">` del `<head>` (evita que buscadores indexen la propuesta), el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación de Telegram que va justo después — esos dos scripts ya están en la plantilla y ambos leen el nombre del cliente del mismo atributo `data-client-name`, así que **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro de ese atributo**, no reescribir ni duplicar ninguno de los dos scripts.
+4. Guarda el archivo en `propuestas/<slug>-<yyyymmdd>-<random>.html`, donde:
    - `<slug>` es el nombre del cliente en minúsculas separado por guiones.
    - `<yyyymmdd>` es la fecha de creación de la propuesta, compacta (sin guiones).
-   - `<ID>` es un consecutivo de 2 dígitos (`01`, `02`, ...) que cuenta cuántas propuestas de **ese mismo cliente** ya existen **ese mismo día** — no es un consecutivo global del día, cada cliente lleva el suyo. Para calcularlo, lista `propuestas/` y busca archivos que empiecen con `<slug>-<yyyymmdd>`; toma el ID más alto que encuentres y súmale 1. Si no hay ninguno, empieza en `01`.
+   - `<random>` son 8 caracteres hexadecimales criptográficamente aleatorios — **nunca los inventes ni los escribas "a ojo"**, siempre généralos ejecutando:
+     ```
+     node -e "console.log(require('crypto').randomBytes(4).toString('hex'))"
+     ```
+     Este componente aleatorio es una medida de seguridad: como las propuestas contienen información comercial privada y no requieren login para verse, el nombre del archivo no debe ser adivinable ni consecutivo (evita que alguien pruebe URLs al azar y llegue a la propuesta de otro cliente).
 
-   Ejemplo: primera propuesta de "Banco ABC" creada el 29 de julio de 2026 → `propuestas/banco-abc-2026072901.html`. Si ese mismo día se genera una segunda propuesta para Banco ABC, sería `propuestas/banco-abc-2026072902.html` — mientras que la primera propuesta de "Tienda XYZ" ese mismo día sería `propuestas/tienda-xyz-2026072901.html` (su propio consecutivo, no choca con el de Banco ABC).
+   Ejemplo: propuesta de "Banco ABC" creada el 29 de julio de 2026 → `propuestas/banco-abc-20260729-9f3a21c4.html`.
 
    Crea la carpeta `propuestas/` si no existe.
 
@@ -153,7 +157,7 @@ Después de guardar el archivo y enviar la notificación de "propuesta creada":
    ```
    https://trismasoluciones.netlify.app/propuestas/<archivo>.html
    ```
-   Ejemplo: `propuestas/motos-de-colombia-2026073001.html` → `https://trismasoluciones.netlify.app/propuestas/motos-de-colombia-2026073001.html`. Si el push fue exitoso, aclara que Netlify puede tardar uno o dos minutos en reflejar el cambio; si falló, aclara que la URL solo quedará disponible una vez el usuario haga el push manualmente.
+   Ejemplo: `propuestas/motos-de-colombia-20260730-63805c66.html` → `https://trismasoluciones.netlify.app/propuestas/motos-de-colombia-20260730-63805c66.html`. Si el push fue exitoso, aclara que Netlify puede tardar uno o dos minutos en reflejar el cambio; si falló, aclara que la URL solo quedará disponible una vez el usuario haga el push manualmente.
 
 ## 8. Confirmación y entrega
 

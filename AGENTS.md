@@ -36,14 +36,21 @@ resultado:
 
 1. Duplicar `plantilla_propuestas.html`.
 2. Guardar la copia en `propuestas/` con el nombre:
-   `propuestas/<slug>-<yyyymmdd><ID>.html`
+   `propuestas/<slug>-<yyyymmdd>-<random>.html`
    (slug del cliente en minúsculas separado por guiones; fecha
-   compacta `yyyymmdd`; `ID` un consecutivo de 2 dígitos que empieza
-   en `01` y cuenta las propuestas **de ese mismo cliente** ese
-   mismo día — no es un consecutivo global). Ejemplo: primera
-   propuesta de "Banco ABC" el 29 de julio de 2026 →
-   `propuestas/banco-abc-2026072901.html`; una segunda propuesta del
-   mismo cliente ese día → `propuestas/banco-abc-2026072902.html`.
+   compacta `yyyymmdd`; `random` son 8 caracteres hexadecimales
+   criptográficamente aleatorios, generados con
+   `node -e "console.log(require('crypto').randomBytes(4).toString('hex'))"`
+   — nunca inventados a mano). Ejemplo: propuesta de "Banco ABC" el
+   29 de julio de 2026 → `propuestas/banco-abc-20260729-9f3a21c4.html`.
+
+   **Por qué el sufijo aleatorio (seguridad)**: las propuestas no
+   requieren login para verse, así que el nombre del archivo es la
+   única barrera para que alguien no autorizado llegue a la propuesta
+   de otro cliente. Un consecutivo predecible (`...01`, `...02`)
+   permitiría adivinar o enumerar URLs; el sufijo aleatorio lo hace
+   impracticable. Ver también la sección "Privacidad de las
+   propuestas" más abajo.
 3. Reemplazar todos los placeholders `[VARIABLE]` según el listado
    documentado en el comentario al inicio del `<body>` de la
    plantilla, usando la transcripción de la llamada de negocio como
@@ -190,11 +197,34 @@ automáticamente en el siguiente deploy de Netlify, en:
 https://trismasoluciones.netlify.app/propuestas/<archivo>.html
 ```
 
-Ejemplo: `propuestas/motos-de-colombia-2026073001.html` →
-`https://trismasoluciones.netlify.app/propuestas/motos-de-colombia-2026073001.html`.
+Ejemplo: `propuestas/motos-de-colombia-20260730-63805c66.html` →
+`https://trismasoluciones.netlify.app/propuestas/motos-de-colombia-20260730-63805c66.html`.
 
 El skill `/creador-propuestas-comerciales` hace commit y push de cada
 propuesta nueva y reporta esta URL al terminar (ver su paso final).
+
+## Privacidad de las propuestas
+
+Las propuestas en `propuestas/` son páginas públicas (cualquiera con
+el link puede verlas, no hay login) pero **no deben ser descubribles**:
+
+- El nombre de archivo incluye un sufijo aleatorio no adivinable (ver
+  "Cómo crear una nueva propuesta" arriba) — nunca volver a un
+  esquema de nombres predecible o consecutivo.
+- Cada propuesta incluye `<meta name="robots" content="noindex, nofollow">`
+  en el `<head>` para que no aparezca en buscadores.
+- `robots.txt` (raíz del sitio) desautoriza el rastreo de `/propuestas/`.
+- `_headers` agrega el header `X-Robots-Tag: noindex, nofollow` a todo
+  lo que esté bajo `/propuestas/*`, como capa adicional.
+
+Esto es "seguridad por oscuridad", no control de acceso real: quien
+tenga el link puede entrar siempre, sin expiración ni revocación. Es
+una decisión consciente por el bajo riesgo del caso de uso (evitar que
+un curioso adivine o enumere URLs), no para proteger información
+altamente sensible. Si en el futuro se necesita control de acceso real
+(links que expiren o se puedan revocar), hay que agregar una capa
+server-side (Netlify Functions con tokens firmados) — no basta con
+este enfoque.
 
 ## Carpetas excluidas del repositorio
 

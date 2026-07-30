@@ -18,9 +18,10 @@ transcripción o un prospecto del Excel de clientes.
 ## Estructura
 
 ```
-plantilla_propuestas.html      # Plantilla base
+index.html                     # Página principal pública de Trisma
+plantilla_propuestas.html      # Plantilla base de propuestas
 propuestas/                    # Propuestas ya generadas
-  slug-yyyymmddID.html          # ej: banco-abc-2026072901.html (ID = consecutivo del cliente ese día)
+  slug-yyyymmdd-random.html     # ej: banco-abc-20260729-9f3a21c4.html (sufijo aleatorio, ver AGENTS.md > Privacidad)
 grabaciones/                   # Grabaciones de llamadas (no versionado)
 transcripciones/               # Transcripciones generadas (no versionado)
 clientes/                      # Excel de prospectos (no versionado)
@@ -30,6 +31,7 @@ scripts/
 netlify/functions/
   notify-telegram.js           # Notifica a Telegram cuando se abre una propuesta
 netlify.toml                   # Configuración de Netlify
+robots.txt / _headers          # Evitan que las propuestas se indexen o sean rastreadas
 .env.example                   # Variables de entorno requeridas
 .claude/skills/creador-propuestas-comerciales/
   SKILL.md                      # Skill que automatiza la creación de propuestas
