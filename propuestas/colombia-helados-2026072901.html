@@ -23,6 +23,10 @@
     --border-2:#CBD5E1;
     --white-70:rgba(255,255,255,0.7);
     --muted:#94A3B8;
+    --exclusion:#B42318;
+    --exclusion-bg:#FDF3F2;
+    --exclusion-border:#F3D6D2;
+    --exclusion-border-hover:#E8B4AC;
     --max-w:1120px;
     --radius:12px;
     --dur:0.7s;
@@ -335,18 +339,6 @@
     object-fit:cover;
     will-change:transform;
   }
-  .vision-media .media-placeholder-label{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--white-70);
-    font-size:13px;
-    letter-spacing:0.08em;
-    text-align:center;
-    padding:24px;
-  }
   @media (max-width:860px){
     .vision-grid{grid-template-columns:1fr;}
   }
@@ -429,35 +421,42 @@
   .exclusions{
     background:var(--surface-alt);
   }
-  .exclusions-panel{
-    margin-top:36px;
-    background:var(--white);
-    border:1px dashed var(--border-2);
-    border-radius:var(--radius);
-    padding:40px 44px;
-  }
   .exclusions-list{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-    gap:16px 28px;
-    margin-top:8px;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:22px;
+    margin-top:40px;
     list-style:none;
     padding:0;
   }
   /* Convention expected for injected [LISTA_EXCLUSIONES] items:
-     <li> elements; a leading dash is added visually via ::before */
+     <li> elements, styled as cards (mismo lenguaje visual que
+     .scope-grid en la sección 04) pero en tono rojo/coral para
+     diferenciar visualmente "lo que no incluye" de "lo que sí incluye". */
   .exclusions-list > li{
     position:relative;
-    padding-left:22px;
+    background:var(--exclusion-bg);
+    border:1px solid var(--exclusion-border);
+    border-radius:var(--radius);
+    padding:24px 24px 24px 52px;
     font-size:15.5px;
+    line-height:1.5;
     color:var(--text-body);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .exclusions-list > li:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(180,35,24,0.18);
+    border-color:var(--exclusion-border-hover);
   }
   .exclusions-list > li::before{
-    content:"–";
+    content:"\2715";
     position:absolute;
-    left:0;
-    color:var(--muted);
+    left:22px;
+    top:24px;
+    color:var(--exclusion);
     font-weight:700;
+    font-size:14px;
   }
 
   /* =========================================================
@@ -596,6 +595,16 @@
     padding-top:26px;
     border-top:1px solid rgba(255,255,255,0.12);
     font-size:16px;
+    color:var(--white-70);
+  }
+  .investment-commission-note{
+    margin-top:22px;
+    padding:18px 20px;
+    background:rgba(227,179,65,0.08);
+    border:1px solid rgba(227,179,65,0.25);
+    border-radius:var(--radius);
+    font-size:14.5px;
+    line-height:1.6;
     color:var(--white-70);
   }
   .investment-cta{margin-top:38px;}
@@ -795,7 +804,7 @@
       <h1>Propuesta de <span class="accent">Gestión de Cartera y Recaudo</span> para Colombia Helados S.A.S.</h1>
       <p class="hero-sub">Programa de Recuperación de Cartera y Liberación de Capital de Trabajo</p>
       <div class="hero-cta">
-        <a href="#inversion" class="btn btn-outline">Ver la propuesta</a>
+        <a href="#alcance" class="btn btn-outline">Ver la propuesta</a>
       </div>
     </div>
   </div>
@@ -837,7 +846,7 @@
         <p>Imaginamos una operación donde la cartera deja de ser una incógnita en el flujo de caja: donde cada venta se traduce en liquidez predecible, con un proceso de gestión de cobro profesional, discreto y basado en datos, que protege la relación comercial mientras acelera el recaudo. Esa caja liberada deja de taponar el crecimiento y se convierte en el combustible para reinvertir en operación, inventario y expansión.</p>
       </div>
       <div class="vision-media reveal" id="visionMedia">
-        <div class="media-placeholder-label">Cartera convertida en caja disponible</div>
+        <img src="../img/Imagen_01.jpg" alt="Programa de Recuperación de Cartera y Liberación de Capital de Trabajo" id="parallaxImg">
       </div>
     </div>
   </div>
@@ -937,14 +946,12 @@
       <h2 class="section-title">Qué no incluye esta propuesta</h2>
       <p class="section-lead">Para mayor claridad, estos puntos quedan fuera del alcance descrito.</p>
     </div>
-    <div class="exclusions-panel reveal">
-      <ul class="exclusions-list stagger-group">
-        <li>Representación jurídica o procesos judiciales de cobro.</li>
-        <li>Gestión de cartera de clientes vinculados por relaciones familiares o societarias con Colombia Helados.</li>
-        <li>Diseño o implementación de un nuevo ERP o sistema de facturación.</li>
-        <li>Condonaciones, descuentos o cambios en la política de crédito sin autorización previa de Colombia Helados.</li>
-      </ul>
-    </div>
+    <ul class="exclusions-list stagger-group reveal" id="exclusionsGrid">
+      <li>Representación jurídica o procesos judiciales de cobro.</li>
+      <li>Gestión de cartera de clientes vinculados por relaciones familiares o societarias con Colombia Helados.</li>
+      <li>Diseño o implementación de un nuevo ERP o sistema de facturación.</li>
+      <li>Condonaciones, descuentos o cambios en la política de crédito sin autorización previa de Colombia Helados.</li>
+    </ul>
   </div>
 </section>
 
@@ -1009,6 +1016,9 @@
       </div>
       <div class="investment-terms">
         Pago único de $2.000.000 COP al inicio del proyecto, correspondiente a la activación y el diagnóstico de cartera. La comisión del 10% se factura mensualmente, únicamente sobre los valores efectivamente recaudados: sin recaudo, no hay comisión.
+      </div>
+      <div class="investment-commission-note">
+        La mayor parte de nuestra remuneración depende del éxito del recaudo: el 10% mensual solo se cobra sobre lo efectivamente recuperado, sin recaudo no hay comisión. El pago único de activación es la única inversión fija, y queda cubierto muchas veces por el primer ciclo de recaudo.
       </div>
     </div>
 

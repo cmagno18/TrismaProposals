@@ -13,16 +13,17 @@ Contexto del proyecto que debes conocer antes de ejecutar cualquier paso: lee [A
 
 ## 1. Recopilar los parámetros iniciales
 
-Antes de procesar nada, confirma que tienes estos tres datos. Si falta alguno, pregúntalo directamente al usuario (en español):
+Antes de procesar nada, confirma que tienes estos cuatro datos. Si falta alguno, pregúntalo directamente al usuario (en español):
 
 1. **Nombre o razón social del cliente.**
-2. **Precio y esquema comercial** (ej: % de comisión sobre recaudo, retainer fijo, o esquema mixto).
-3. **Origen de la información** — cuál de los tres escenarios aplica, **y el nombre del archivo a usar**:
+2. **Precio y esquema comercial** (ej: % de comisión sobre recaudo, retainer fijo, o esquema mixto). Si el usuario indica que el precio es 0 (o que no aplica mostrar cifra en esta etapa), tenlo en cuenta: la sección 07 (Inversión) no se incluirá en el archivo generado (ver paso 5).
+3. **¿La propuesta es preliminar o definitiva?** Si es preliminar (un borrador para validar internamente o con el cliente antes de la versión final), el título de la propuesta debe decirlo explícitamente ("Propuesta Preliminar de..." — ver paso 5).
+4. **Origen de la información** — cuál de los tres escenarios aplica, **y el nombre del archivo a usar**:
    - **A. Grabación** — archivo de audio/video en `grabaciones/`.
    - **B. Transcripción** — archivo de texto/markdown ya existente en `transcripciones/`.
    - **C. Excel de prospecto** — fila de un archivo en `clientes/`.
 
-Si el usuario ya dio estos datos en su mensaje (ej. "arma la propuesta para Banco ABC con 15% de comisión, usa la grabación llamada_banco_abc.mp3"), no se los vuelvas a preguntar — solo confirma cuáles faltan.
+Si el usuario ya dio estos datos en su mensaje (ej. "arma la propuesta preliminar para Banco ABC con 15% de comisión, usa la grabación llamada_banco_abc.mp3"), no se los vuelvas a preguntar — solo confirma cuáles faltan.
 
 **No explores por tu cuenta las carpetas `grabaciones/`, `transcripciones/` o `clientes/` para adivinar qué archivo usar.** Si el usuario indicó el escenario pero no el nombre del archivo, sigue esta regla antes de leer nada:
 
@@ -93,7 +94,8 @@ Nunca generes el archivo final sin este paso. Muestra al usuario un resumen y es
 
 ```
 Cliente: [nombre]
-Esquema comercial: [precio/comisión]
+Tipo de propuesta: [preliminar / definitiva]
+Esquema comercial: [precio/comisión, o "sin cifra (precio 0)"]
 Sector / contexto: [sector detectado u "omitido"]
 Buyer persona identificado: [perfil Trisma]
 Párrafo de entendimiento: [resumen breve]
@@ -110,8 +112,12 @@ Espera la respuesta. Si pide cambios, ajústalos y vuelve a confirmar. Solo con 
 ## 5. Construir y guardar la propuesta
 
 1. Lee `plantilla_propuestas.html` completo, incluyendo el comentario inicial que lista todos los placeholders disponibles.
-2. Completa cada `[VARIABLE]` con la información validada: `[NOMBRE_CLIENTE]`, `[NOMBRE_PROYECTO]`, `[FECHA]`, `[PARRAFO_ENTENDIMIENTO]`, `[PARRAFO_VISION]`, `[LISTA_ALCANCE]`, `[LISTA_EXCLUSIONES]`, `[FASES]`, `[NOTA_TIEMPOS]`, `[PRECIO]`, `[FORMA_DE_PAGO]`, `[DIFERENCIADOR_1/2/3]`, `[GARANTIA]`, `[PARRAFO_CIERRE]`, `[TEXTO_CTA]`, `[NOMBRE_EMPRESA]`, `[CONTACTO]`, y cualquier otro que exista en la plantilla — no dejes ninguno sin reemplazar.
-3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`) y el `<script>` justo después que arma su mensaje prellenado, el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación de Telegram que va justo después — esos dos scripts ya están en la plantilla y ambos leen el nombre del cliente del mismo atributo `data-client-name`, así que **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro de ese atributo**, no reescribir ni duplicar ninguno de los dos scripts.
+2. Completa cada `[VARIABLE]` con la información validada: `[NOMBRE_CLIENTE]`, `[NOMBRE_PROYECTO]`, `[FECHA]`, `[PARRAFO_ENTENDIMIENTO]`, `[PARRAFO_VISION]`, `[LISTA_ALCANCE]`, `[LISTA_EXCLUSIONES]`, `[FASES]`, `[NOTA_TIEMPOS]`, `[PRECIO]`, `[FORMA_DE_PAGO]`, `[DIFERENCIADOR_1/2/3]`, `[GARANTIA]`, `[PARRAFO_CIERRE]`, `[TEXTO_CTA]`, `[NOMBRE_EMPRESA]`, `[CONTACTO]`, y cualquier otro que exista en la plantilla — no dejes ninguno sin reemplazar. Casos especiales:
+   - `[ETIQUETA_PROPUESTA]` (en el `<h1>` del hero): déjalo vacío si la propuesta es definitiva, o escribe `Preliminar ` (con espacio al final) si es preliminar, para que el título quede "Propuesta Preliminar de...".
+   - `[NOTA_ESQUEMA_COMISION]` (sección 07): solo inclúyelo si el esquema comercial es 100% comisión sobre recaudo, sin ningún costo fijo inicial. Si hay un componente fijo/setup en el esquema, elimina ese `<div class="investment-commission-note">` completo — no dejes el placeholder vacío ni adaptes el texto, porque asume que no hay barrera de presupuesto inicial.
+   - Si el precio acordado es **0** (o el usuario indicó que no aplica mostrar cifra), elimina la sección 07 completa (`<section class="investment on-dark" id="inversion">...</section>`) del archivo generado. No la dejes vacía ni con "$0". Esto no rompe nada más: el botón "Ver la propuesta" del hero ya apunta a la sección 04, no a la 07.
+   - La imagen de la sección 03 (`img/Imagen_01.jpg`) es fija, no un placeholder — pero al guardar el archivo en `propuestas/` (un nivel más abajo que la plantilla), ajusta su ruta a `../img/Imagen_01.jpg` para que siga resolviendo correctamente.
+3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`) y el `<script>` justo después que arma su mensaje prellenado, el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el botón "Ver la propuesta" del hero (enlaza a `#alcance`), el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación de Telegram que va justo después — esos dos scripts ya están en la plantilla y ambos leen el nombre del cliente del mismo atributo `data-client-name`, así que **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro de ese atributo**, no reescribir ni duplicar ninguno de los dos scripts.
 4. Guarda el archivo en `propuestas/<slug>-<yyyymmdd><ID>.html`, donde:
    - `<slug>` es el nombre del cliente en minúsculas separado por guiones.
    - `<yyyymmdd>` es la fecha de creación de la propuesta, compacta (sin guiones).

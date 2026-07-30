@@ -112,6 +112,33 @@ librerías externas.
 - WhatsApp del CTA final: `https://wa.me/573028337824`
 - Bloque "Ecosistema de Capacidades Trisma" (sección 04): los 7
   pilares del portafolio completo de Trisma.
+- Imagen de la sección 03 (Visión): `img/Imagen_01.jpg`. Desde
+  `plantilla_propuestas.html` (raíz) la ruta es `img/Imagen_01.jpg`;
+  al duplicar el archivo en `propuestas/` hay que ajustarla a
+  `../img/Imagen_01.jpg` (un nivel más abajo).
+- El botón "Ver la propuesta" del hero enlaza a la sección 04
+  (`#alcance`), no a la 07 (Inversión).
+
+## Propuestas preliminares vs. definitivas
+
+El `<h1>` del hero incluye el placeholder `[ETIQUETA_PROPUESTA]`:
+vacío para una propuesta definitiva, o `"Preliminar "` (con espacio
+al final) para que el título quede "Propuesta Preliminar de...".
+
+## Sección 07 (Inversión) cuando el precio es 0
+
+Si `[PRECIO]` es 0 (ej. diagnóstico gratuito, o un caso donde no
+aplica mostrar cifra), la sección 07 completa se omite del archivo
+generado — no se deja vacía ni con "$0". Esto no rompe ningún enlace
+interno: el botón del hero ya apunta a la sección 04, no a la 07.
+
+## Nota de esquema por comisión (sección 07)
+
+`[NOTA_ESQUEMA_COMISION]` es opcional: solo se incluye si el esquema
+comercial es 100% comisión sobre recaudo (sin costo fijo inicial). Si
+el esquema tiene un componente fijo/setup, se omite el bloque
+completo — no adaptar el texto, ya que asume que no hay barrera de
+presupuesto inicial.
 
 ## Despliegue
 

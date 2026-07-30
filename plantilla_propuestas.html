@@ -25,6 +25,10 @@
       [NOMBRE_PROYECTO]         Nombre corto del proyecto/propuesta
       [LOGO]                    Isotipo/nombre de marca en el hero
       [FECHA]                   Fecha de presentación de la propuesta
+      [ETIQUETA_PROPUESTA]      Vacío si es definitiva, o "Preliminar "
+                                 (con espacio al final) si es borrador —
+                                 el título queda "Propuesta Preliminar
+                                 de..." en ese caso
 
   02. Entendimos lo que buscas
       [PARRAFO_ENTENDIMIENTO]   Párrafo único que resume el contexto,
@@ -32,8 +36,8 @@
 
   03. Nuestra visión para tu proyecto
       [PARRAFO_VISION]          Párrafo único de propuesta de valor
-      [IMAGEN_VISION]           (Opcional) URL de imagen para la capa
-                                 con parallax
+      (la imagen de esta sección es fija — img/Imagen_01.jpg — y no es
+      un placeholder; ver nota junto a <div class="vision-media">)
 
   04. Qué incluye el servicio — Alcance
       [LISTA_ALCANCE]           Bloque HTML único con las tarjetas de
@@ -52,6 +56,12 @@
   07. Inversión
       [PRECIO]                  Cifra/rango de inversión
       [FORMA_DE_PAGO]           Condiciones y esquema de pago
+      [NOTA_ESQUEMA_COMISION]   (Opcional) Solo si el esquema es 100%
+                                 comisión sobre recaudo, sin costo fijo
+                                 inicial — omitir el bloque completo si no
+
+      Si [PRECIO] es 0, esta sección 07 completa se omite del archivo
+      generado (ver nota junto a <section id="inversion">).
 
   08. Por qué confiar en nosotros
       [DIFERENCIADOR_1]         Primer diferenciador
@@ -106,6 +116,10 @@
     --border-2:#CBD5E1;
     --white-70:rgba(255,255,255,0.7);
     --muted:#94A3B8;
+    --exclusion:#B42318;
+    --exclusion-bg:#FDF3F2;
+    --exclusion-border:#F3D6D2;
+    --exclusion-border-hover:#E8B4AC;
     --max-w:1120px;
     --radius:12px;
     --dur:0.7s;
@@ -418,18 +432,6 @@
     object-fit:cover;
     will-change:transform;
   }
-  .vision-media .media-placeholder-label{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--white-70);
-    font-size:13px;
-    letter-spacing:0.08em;
-    text-align:center;
-    padding:24px;
-  }
   @media (max-width:860px){
     .vision-grid{grid-template-columns:1fr;}
   }
@@ -512,35 +514,42 @@
   .exclusions{
     background:var(--surface-alt);
   }
-  .exclusions-panel{
-    margin-top:36px;
-    background:var(--white);
-    border:1px dashed var(--border-2);
-    border-radius:var(--radius);
-    padding:40px 44px;
-  }
   .exclusions-list{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-    gap:16px 28px;
-    margin-top:8px;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:22px;
+    margin-top:40px;
     list-style:none;
     padding:0;
   }
   /* Convention expected for injected [LISTA_EXCLUSIONES] items:
-     <li> elements; a leading dash is added visually via ::before */
+     <li> elements, styled as cards (mismo lenguaje visual que
+     .scope-grid en la sección 04) pero en tono rojo/coral para
+     diferenciar visualmente "lo que no incluye" de "lo que sí incluye". */
   .exclusions-list > li{
     position:relative;
-    padding-left:22px;
+    background:var(--exclusion-bg);
+    border:1px solid var(--exclusion-border);
+    border-radius:var(--radius);
+    padding:24px 24px 24px 52px;
     font-size:15.5px;
+    line-height:1.5;
     color:var(--text-body);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .exclusions-list > li:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(180,35,24,0.18);
+    border-color:var(--exclusion-border-hover);
   }
   .exclusions-list > li::before{
-    content:"–";
+    content:"\2715";
     position:absolute;
-    left:0;
-    color:var(--muted);
+    left:22px;
+    top:24px;
+    color:var(--exclusion);
     font-weight:700;
+    font-size:14px;
   }
 
   /* =========================================================
@@ -679,6 +688,16 @@
     padding-top:26px;
     border-top:1px solid rgba(255,255,255,0.12);
     font-size:16px;
+    color:var(--white-70);
+  }
+  .investment-commission-note{
+    margin-top:22px;
+    padding:18px 20px;
+    background:rgba(227,179,65,0.08);
+    border:1px solid rgba(227,179,65,0.25);
+    border-radius:var(--radius);
+    font-size:14.5px;
+    line-height:1.6;
     color:var(--white-70);
   }
   .investment-cta{margin-top:38px;}
@@ -875,10 +894,12 @@
   <div class="hero-body">
     <div class="hero-inner">
       <span class="hero-eyebrow">Propuesta Comercial</span>
-      <h1>Propuesta de <span class="accent">[TIPO_DE_SERVICIO]</span> para [NOMBRE_CLIENTE]</h1>
+      <!-- [ETIQUETA_PROPUESTA]: vacío si la propuesta es definitiva, o
+           "Preliminar " (con espacio al final) si es preliminar/borrador. -->
+      <h1>Propuesta [ETIQUETA_PROPUESTA]de <span class="accent">[TIPO_DE_SERVICIO]</span> para [NOMBRE_CLIENTE]</h1>
       <p class="hero-sub">[NOMBRE_PROYECTO]</p>
       <div class="hero-cta">
-        <a href="#inversion" class="btn btn-outline">Ver la propuesta</a>
+        <a href="#alcance" class="btn btn-outline">Ver la propuesta</a>
       </div>
     </div>
   </div>
@@ -922,10 +943,12 @@
         <p>[PARRAFO_VISION]</p>
       </div>
       <div class="vision-media reveal" id="visionMedia">
-        <!-- Opcional: si existe [IMAGEN_VISION], reemplazar por
-             <img src="[IMAGEN_VISION]" alt="[NOMBRE_PROYECTO]" id="parallaxImg">
-             La capa se mueve sutilmente con el scroll (ver JS). -->
-        <div class="media-placeholder-label">[IMAGEN_VISION]</div>
+        <!-- Imagen fija de marca de Trisma para esta sección — no es un
+             placeholder, no cambia por propuesta. Ruta relativa: desde
+             la raíz del repo es "img/Imagen_01.jpg"; al duplicar este
+             archivo en propuestas/ (un nivel más abajo), ajustar la ruta
+             a "../img/Imagen_01.jpg". -->
+        <img src="img/Imagen_01.jpg" alt="[NOMBRE_PROYECTO]" id="parallaxImg">
       </div>
     </div>
   </div>
@@ -1009,15 +1032,15 @@
       <h2 class="section-title">Qué no incluye esta propuesta</h2>
       <p class="section-lead">Para mayor claridad, estos puntos quedan fuera del alcance descrito.</p>
     </div>
-    <div class="exclusions-panel reveal">
-      <ul class="exclusions-list stagger-group">
-        <!--
-          La IA reemplaza el placeholder de abajo por entre 2 y 6
-          elementos <li> con cada exclusión.
-        -->
-        [LISTA_EXCLUSIONES]
-      </ul>
-    </div>
+    <ul class="exclusions-list stagger-group reveal" id="exclusionsGrid">
+      <!--
+        La IA reemplaza este comentario y el placeholder de abajo por
+        entre 2 y 6 elementos <li> con cada exclusión. No es necesario
+        añadir clases: el estilo de tarjeta y el efecto "stagger" ya
+        se aplican a los hijos directos de #exclusionsGrid.
+      -->
+      [LISTA_EXCLUSIONES]
+    </ul>
   </div>
 </section>
 
@@ -1051,6 +1074,13 @@
 
 <!-- =========================================================
      07. INVERSIÓN
+
+     Nota: si el precio de la propuesta es 0 (ej. diagnóstico gratuito,
+     o un esquema donde no aplica mostrar cifra), esta sección 07
+     completa debe omitirse del archivo generado — no dejarla vacía ni
+     con "$0". Si se omite, no queda ningún enlace roto: el único botón
+     que apuntaba aquí ("Ver la propuesta" del hero) ya enlaza a la
+     sección 04 (Alcance), no a esta.
 ========================================================= -->
 <section class="investment on-dark" id="inversion">
   <div class="wrap">
@@ -1068,6 +1098,12 @@
       <div class="investment-terms">
         <!-- Ej: % al inicio + saldo por hitos, o esquema a resultados (% sobre recaudo) -->
         [FORMA_DE_PAGO]
+      </div>
+      <!-- Opcional: incluir SOLO si el esquema comercial es 100% comisión
+           sobre recaudo (sin costo fijo inicial). Omitir todo este bloque
+           si hay un componente fijo/setup en el esquema. -->
+      <div class="investment-commission-note">
+        [NOTA_ESQUEMA_COMISION]
       </div>
     </div>
 
