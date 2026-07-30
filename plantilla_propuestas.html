@@ -23,8 +23,9 @@
       [TIPO_DE_SERVICIO]        Ej: "Gestión de Cartera y Recaudo"
       [NOMBRE_CLIENTE]          Nombre del cliente / empresa
       [NOMBRE_PROYECTO]         Nombre corto del proyecto/propuesta
-      [LOGO]                    Isotipo/nombre de marca en el hero
       [FECHA]                   Fecha de presentación de la propuesta
+      (el logo "TRISMA." de la esquina superior izquierda es fijo, no
+      es un placeholder — enlaza siempre a la página principal)
       [ETIQUETA_PROPUESTA]      Vacío si es definitiva, o "Preliminar "
                                  (con espacio al final) si es borrador —
                                  el título queda "Propuesta Preliminar
@@ -271,10 +272,12 @@
   .hero-logo{
     font-family:'Poppins', sans-serif;
     font-weight:700;
-    letter-spacing:0.06em;
-    font-size:16px;
+    letter-spacing:0.02em;
+    font-size:18px;
     color:var(--white);
+    text-decoration:none;
   }
+  .hero-logo .dot{color:var(--gold);}
   .hero-date{
     font-size:13px;
     color:var(--white-70);
@@ -895,7 +898,7 @@
 ========================================================= -->
 <header class="hero" id="top">
   <div class="hero-top">
-    <div class="hero-logo">[LOGO]</div>
+    <a href="index.html" class="hero-logo">TRISMA<span class="dot">.</span></a>
     <div class="hero-date">[FECHA]</div>
   </div>
 

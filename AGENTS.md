@@ -139,6 +139,12 @@ librerías externas.
   `../img/Imagen_01.jpg` (un nivel más abajo).
 - El botón "Ver la propuesta" del hero enlaza a la sección 04
   (`#alcance`), no a la 07 (Inversión).
+- El logo "TRISMA." de la esquina superior izquierda (`.hero-logo`):
+  texto fijo, no un placeholder, con el mismo estilo que el logo de
+  `index.html`. Enlaza siempre a la página principal — desde
+  `plantilla_propuestas.html` (raíz) es `href="index.html"`; al
+  duplicar el archivo en `propuestas/` hay que ajustarlo a
+  `href="../index.html"` (un nivel más abajo).
 
 ## Propuestas preliminares vs. definitivas
 
