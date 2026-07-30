@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trisma Soluciones — Aceleración de Ciclo de Caja y Gestión de Cartera</title>
+<meta name="description" content="Trisma Soluciones convierte ingreso en papel en caja real, mediante gestión de cartera, analítica de riesgo e inteligencia artificial, bajo un modelo comercial alineado a resultados.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy:#0A2540;
+    --navy-soft:#0F2E4D;
+    --gold:#E3B341;
+    --gold-soft:rgba(227,179,65,0.35);
+    --text-body:#425466;
+    --surface:#F8FAFC;
+    --surface-alt:#F1F5F9;
+    --white:#FFFFFF;
+    --border-1:#E2E8F0;
+    --border-2:#CBD5E1;
+    --white-70:rgba(255,255,255,0.7);
+    --muted:#94A3B8;
+    --max-w:1120px;
+    --radius:12px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Lato', sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    color:var(--text-body);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Poppins', sans-serif;
+    color:var(--navy);
+    line-height:1.2;
+    margin:0;
+  }
+  p{margin:0;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 24px;
+  }
+  section{padding:96px 0;}
+  .on-dark{background:var(--navy); color:var(--white-70);}
+  .on-dark h2, .on-dark h3{color:var(--white);}
+
+  .eyebrow{
+    display:inline-block;
+    font-family:'Poppins', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .section-title{
+    font-size:clamp(28px, 3.4vw, 38px);
+    font-weight:700;
+  }
+  .section-lead{
+    margin-top:16px;
+    font-size:18px;
+    max-width:640px;
+  }
+  .on-dark .section-lead{color:var(--white-70);}
+
+  /* ---- Reveal / stagger (igual que en las propuestas) ---- */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+  .stagger-group > *{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stagger-group.is-visible > *{opacity:1; transform:translateY(0);}
+  .stagger-group.is-visible > *:nth-child(1){transition-delay:0.05s;}
+  .stagger-group.is-visible > *:nth-child(2){transition-delay:0.12s;}
+  .stagger-group.is-visible > *:nth-child(3){transition-delay:0.19s;}
+  .stagger-group.is-visible > *:nth-child(4){transition-delay:0.26s;}
+  .stagger-group.is-visible > *:nth-child(5){transition-delay:0.33s;}
+  .stagger-group.is-visible > *:nth-child(6){transition-delay:0.40s;}
+  .stagger-group.is-visible > *:nth-child(7){transition-delay:0.47s;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal, .stagger-group > *{
+      opacity:1 !important; transform:none !important; transition:none !important;
+    }
+  }
+
+  /* ---- Botones ---- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:15px 28px;
+    border-radius:999px;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid transparent;
+  }
+  .btn-gold{
+    background:var(--gold);
+    color:var(--navy);
+  }
+  .btn-gold:hover{background:#EFC260;}
+  .btn-outline{
+    background:transparent;
+    border-color:rgba(255,255,255,0.35);
+    color:var(--white);
+  }
+  .btn-outline:hover{border-color:var(--gold); color:var(--gold);}
+  .btn-outline-dark{
+    background:transparent;
+    border-color:var(--border-2);
+    color:var(--navy);
+  }
+  .btn-outline-dark:hover{border-color:var(--navy);}
+
+  /* ---- Navegación ---- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(10,37,64,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:16px;
+    padding-bottom:16px;
+  }
+  .nav-brand{
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--white);
+    letter-spacing:0.02em;
+  }
+  .nav-brand .dot{color:var(--gold);}
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .nav-links a{
+    font-family:'Poppins', sans-serif;
+    font-size:14px;
+    color:var(--white-70);
+    text-decoration:none;
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{display:none;}
+  @media (min-width:760px){
+    .nav-cta{display:inline-flex; padding:11px 22px; font-size:13.5px;}
+  }
+  @media (max-width:759px){
+    .nav-links{gap:16px;}
+    .nav-links a{font-size:12.5px;}
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-soft) 100%);
+    padding:88px 0 96px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(34px, 5vw, 52px);
+    font-weight:700;
+    color:var(--white);
+  }
+  .hero h1 .accent{color:var(--gold);}
+  .hero-sub{
+    margin-top:22px;
+    font-size:19px;
+    color:var(--white-70);
+    max-width:560px;
+  }
+  .hero-cta{
+    margin-top:34px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .hero-media{
+    position:relative;
+    border-radius:var(--radius);
+    overflow:hidden;
+    min-height:340px;
+    border:1px solid rgba(255,255,255,0.12);
+    background:linear-gradient(160deg, rgba(227,179,65,0.16), rgba(255,255,255,0.03));
+  }
+  .hero-media img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    max-width:none;
+    object-fit:cover;
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-media{min-height:260px;}
+  }
+
+  /* ---- Modelo / propuesta de valor ---- */
+  .model{background:var(--white);}
+  .model-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:22px;
+    margin-top:44px;
+  }
+  .model-grid > *{
+    background:var(--surface);
+    border:1px solid var(--border-1);
+    border-left:3px solid var(--gold);
+    border-radius:var(--radius);
+    padding:26px;
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .model-grid > *:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(10,37,64,0.22);
+    border-color:var(--gold-soft);
+  }
+  .model-grid h3{
+    font-size:17px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .model-grid p{font-size:15px; color:var(--text-body);}
+
+  /* ---- Servicios (ecosistema) ---- */
+  .services{background:var(--navy);}
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:18px;
+    margin-top:44px;
+  }
+  .pillar{
+    background:var(--navy-soft);
+    color:var(--white-70);
+    border-radius:var(--radius);
+    padding:24px 22px;
+    border:1px solid rgba(255,255,255,0.08);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  .pillar:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(0,0,0,0.45);
+    border-color:var(--gold-soft);
+    background:#123a5e;
+  }
+  .pillar .pillar-index{
+    font-family:'Poppins', sans-serif;
+    font-size:12px;
+    color:var(--gold);
+    letter-spacing:0.1em;
+    margin-bottom:10px;
+    display:block;
+  }
+  .pillar strong{
+    display:block;
+    color:var(--white);
+    font-family:'Poppins', sans-serif;
+    font-size:15.5px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .pillar span.desc{font-size:13.5px;}
+
+  /* ---- Perfiles (buyer personas) ---- */
+  .personas{background:var(--surface);}
+  .personas-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:22px;
+    margin-top:44px;
+  }
+  .persona-card{
+    background:var(--white);
+    border:1px solid var(--border-1);
+    border-radius:var(--radius);
+    padding:28px;
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .persona-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(10,37,64,0.22);
+    border-color:var(--gold-soft);
+  }
+  .persona-card .persona-name{
+    font-family:'Poppins', sans-serif;
+    font-size:17px;
+    font-weight:700;
+    color:var(--navy);
+  }
+  .persona-card .persona-role{
+    display:block;
+    margin-top:2px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .persona-card p{
+    margin-top:14px;
+    font-size:15px;
+  }
+
+  /* ---- Confianza / diferenciadores ---- */
+  .trust{background:var(--white);}
+  .trust-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:22px;
+    margin-top:44px;
+  }
+  .trust-card{
+    padding:28px;
+    border:1px solid var(--border-1);
+    border-radius:var(--radius);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .trust-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(10,37,64,0.22);
+    border-color:var(--gold-soft);
+  }
+  .icon-dot{
+    width:38px; height:38px;
+    border-radius:50%;
+    background:rgba(227,179,65,0.12);
+    border:1px solid var(--gold-soft);
+    margin-bottom:16px;
+  }
+  .trust-card h3{
+    font-size:16.5px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .trust-card p{font-size:15px;}
+
+  /* ---- Cierre / CTA ---- */
+  .closing{
+    background:linear-gradient(180deg, var(--navy) 0%, #08192E 100%);
+    text-align:center;
+  }
+  .closing .wrap{max-width:720px;}
+  .closing-title{
+    font-size:clamp(28px, 4vw, 38px);
+    font-weight:700;
+    color:var(--white);
+  }
+  .closing-lead{
+    margin-top:18px;
+    font-size:18px;
+    color:var(--white-70);
+  }
+  .closing-cta{margin-top:36px;}
+  .closing-cta .btn-gold{
+    padding:19px 40px;
+    font-size:16px;
+    position:relative;
+    overflow:hidden;
+    transition:transform 0.35s cubic-bezier(.16,.84,.44,1), box-shadow 0.35s ease;
+    box-shadow:0 0 0 rgba(227,179,65,0);
+  }
+  .closing-cta .btn-gold:hover{
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 18px 34px -12px rgba(227,179,65,0.55);
+  }
+  .closing-cta .btn-gold::before{
+    content:"";
+    position:absolute;
+    top:0; left:-60%;
+    width:40%; height:100%;
+    background:rgba(255,255,255,0.35);
+    transform:skewX(-20deg);
+    transition:left 0.6s ease;
+  }
+  .closing-cta .btn-gold:hover::before{left:130%;}
+
+  /* ---- Footer ---- */
+  .site-footer{
+    background:#08192E;
+    padding:44px 0;
+    text-align:center;
+  }
+  .site-footer .brand{
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    color:var(--white);
+    font-size:16px;
+  }
+  .site-footer .meta{
+    margin-top:10px;
+    font-size:13.5px;
+    color:var(--muted);
+  }
+  .site-footer .meta a{color:var(--white-70); text-decoration:none;}
+  .site-footer .meta a:hover{color:var(--gold);}
+
+  @media (max-width:640px){
+    section{padding:64px 0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAVEGACIÓN
+========================================================= -->
+<nav class="nav">
+  <div class="wrap">
+    <span class="nav-brand">TRISMA<span class="dot">.</span></span>
+    <ul class="nav-links">
+      <li><a href="#modelo">Modelo</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#perfiles">Para quién</a></li>
+      <li><a href="#confianza">Por qué Trisma</a></li>
+    </ul>
+    <a href="https://wa.me/573028337824" class="btn btn-outline nav-cta js-whatsapp-cta" target="_blank" rel="noopener">Contáctenos</a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<header class="hero" id="inicio">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Aceleración de ciclo de caja</span>
+        <h1>Convierta ingreso en papel en <span class="accent">caja real</span></h1>
+        <p class="hero-sub">Trisma Soluciones es la firma consultora y operativa que acelera el ciclo de caja de su empresa mediante disciplina operativa, analítica de segmentación e inteligencia artificial — con un modelo comercial alineado a resultados: ganamos principalmente cuando usted recupera su dinero.</p>
+        <div class="hero-cta">
+          <a href="https://wa.me/573028337824" class="btn btn-gold js-whatsapp-cta" target="_blank" rel="noopener">Contáctenos</a>
+          <a href="#servicios" class="btn btn-outline">Conocer los servicios</a>
+        </div>
+      </div>
+      <div class="hero-media reveal">
+        <img src="img/Imagen_02.jpg" alt="Equipo de Trisma Soluciones analizando indicadores de cartera y recaudo">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     MODELO / PROPUESTA DE VALOR
+========================================================= -->
+<section class="model" id="modelo">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Nuestro enfoque</span>
+      <h2 class="section-title">No somos una agencia de cobranza tradicional</h2>
+      <p class="section-lead">Somos un brazo ejecutor financiero: convertimos "ingreso en papel" en "caja real" con disciplina operativa, analítica de segmentación, inteligencia artificial y automatización de procesos — bajo un modelo comercial alineado a resultados (comisión sobre recaudo, Win-Win).</p>
+    </div>
+    <div class="model-grid stagger-group reveal">
+      <div>
+        <h3>Segmentación inteligente</h3>
+        <p>Priorizamos la cartera por riesgo, antigüedad, monto y comportamiento de pago, para enfocar la gestión donde realmente hay probabilidad de recuperación.</p>
+      </div>
+      <div>
+        <h3>Gestión omnicanal</h3>
+        <p>Contacto por WhatsApp, llamadas, correo y SMS, con protocolos que preservan la relación comercial y la reputación de su marca.</p>
+      </div>
+      <div>
+        <h3>Reportes ejecutivos</h3>
+        <p>Visibilidad periódica del estado de la cartera gestionada, con indicadores claros de recaudo, contactabilidad y cumplimiento de acuerdos.</p>
+      </div>
+      <div>
+        <h3>Modelo por resultados</h3>
+        <p>Nuestra remuneración se basa principalmente en una comisión sobre el éxito del recaudo: alineamos nuestros intereses con los suyos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SERVICIOS — ECOSISTEMA DE CAPACIDADES TRISMA
+========================================================= -->
+<section class="services on-dark" id="servicios">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Portafolio integral</span>
+      <h2 class="section-title">Ecosistema de Capacidades Trisma</h2>
+      <p class="section-lead">Siete frentes de trabajo que se combinan según la necesidad específica de cada organización.</p>
+    </div>
+    <div class="services-grid stagger-group reveal">
+      <div class="pillar">
+        <span class="pillar-index">01</span>
+        <strong>Cobranza Especializada</strong>
+        <span class="desc">Recuperación de cartera preventiva, administrativa, prejurídica y de normalización.</span>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">02</span>
+        <strong>Gestión Integral del Ciclo de Ingresos</strong>
+        <span class="desc">Estructuración, facturación, recaudo y flujo de caja.</span>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">03</span>
+        <strong>Analítica de Riesgo y Perfilamiento</strong>
+        <span class="desc">Modelos de scoring crediticio, comportamiento de pago y segmentación.</span>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">04</span>
+        <strong>Soluciones de Liquidez Empresarial</strong>
+        <span class="desc">Factoring e intermediación para capital de trabajo.</span>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">05</span>
+        <strong>Automatización y Transformación Digital</strong>
+        <span class="desc">IA para recaudo, dashboards en Power BI / Looker Studio e integración con ERP.</span>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">06</span>
+        <strong>Consultoría en Eficiencia Financiera</strong>
+        <span class="desc">Diagnóstico, indicadores de DSO y reingeniería de procesos.</span>
+      </div>
+      <div class="pillar">
+        <span class="pillar-index">07</span>
+        <strong>Formación Empresarial</strong>
+        <span class="desc">Capacitación en riesgo crediticio y fortalecimiento financiero.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PARA QUIÉN ES TRISMA — PERFILES
+========================================================= -->
+<section class="personas" id="perfiles">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">¿Le suena familiar?</span>
+      <h2 class="section-title">Para quién es Trisma</h2>
+      <p class="section-lead">Trabajamos con organizaciones de distintos sectores que comparten un mismo síntoma: utilidades que no se traducen en caja disponible.</p>
+    </div>
+    <div class="personas-grid stagger-group reveal">
+      <div class="persona-card">
+        <span class="persona-name">Dueños de PYME</span>
+        <span class="persona-role">Iliquidez "en papel"</span>
+        <p>Su empresa es rentable en el papel, pero el efectivo está atrapado en facturas. Recurre a crédito costoso para pagar nómina y proveedores, y su equipo pierde tiempo persiguiendo pagos en vez de vender.</p>
+      </div>
+      <div class="persona-card">
+        <span class="persona-name">Retail y Centros Comerciales</span>
+        <span class="persona-role">Volumen y DSO alto</span>
+        <p>Gestionar cientos de deudores o arrendatarios manualmente es inviable. El DSO está fuera de meta, y una cobranza mal ejecutada puede generar vacancia de locales.</p>
+      </div>
+      <div class="persona-card">
+        <span class="persona-name">Instituciones Educativas</span>
+        <span class="persona-role">Riesgo reputacional</span>
+        <p>La mora en pensiones y matrículas afecta la nómina docente, pero una cobranza agresiva puede dañar la relación con las familias y la imagen de la institución.</p>
+      </div>
+      <div class="persona-card">
+        <span class="persona-name">Propiedad Horizontal</span>
+        <span class="persona-role">Desgaste y conflicto vecinal</span>
+        <p>Cobrarle al vecino con el que se cruza en el ascensor genera desgaste. El consejo exige resultados, y persisten dudas sobre el proceso persuasivo conforme a la Ley 675.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     POR QUÉ CONFIAR EN TRISMA
+========================================================= -->
+<section class="trust" id="confianza">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Nuestro compromiso</span>
+      <h2 class="section-title">Por qué confiar en Trisma</h2>
+    </div>
+    <div class="trust-grid stagger-group reveal">
+      <div class="trust-card">
+        <div class="icon-dot"></div>
+        <h3>Mediación Ética y Preservación de Marca</h3>
+        <p>Actuamos como un tercero neutral: gestionamos su cartera sin desgastar la relación con sus clientes, arrendatarios o copropietarios.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon-dot"></div>
+        <h3>Tecnología de Scoring e IA</h3>
+        <p>Priorizamos la cartera con modelos de comportamiento de pago, para enfocar el esfuerzo de cobro donde realmente hay probabilidad de recuperación.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon-dot"></div>
+        <h3>Modelo Orientado a Resultados</h3>
+        <p>Nuestro modelo de comisión sobre recaudo alinea nuestros intereses con los suyos: nuestra remuneración depende principalmente del éxito de la gestión.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CIERRE / CTA FINAL
+========================================================= -->
+<section class="closing on-dark" id="contacto">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Próximo paso</span>
+    </div>
+    <h2 class="closing-title reveal">Hablemos de su cartera</h2>
+    <p class="closing-lead reveal">Cuéntenos su caso y le mostraremos cómo convertir esa cartera pendiente en caja disponible, sin fricción operativa para su equipo.</p>
+    <div class="closing-cta reveal">
+      <a href="https://wa.me/573028337824" class="btn btn-gold js-whatsapp-cta" target="_blank" rel="noopener">Contáctenos por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="brand">Trisma Soluciones</div>
+    <div class="meta">
+      Cali, Colombia · <a href="mailto:comercial@trisma.com">comercial@trisma.com</a> · <a href="https://www.trisma.com" target="_blank" rel="noopener">www.trisma.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- Enlace de WhatsApp con mensaje prellenado (mismo número que las propuestas) ----
+  var whatsappMessage = 'Hola equipo Trisma. Estoy interesado en sus servicios. ¿Podemos agendar una reunión de entendimiento?.';
+  var whatsappUrl = 'https://wa.me/573028337824?text=' + encodeURIComponent(whatsappMessage);
+  document.querySelectorAll('.js-whatsapp-cta').forEach(function(a){
+    a.href = whatsappUrl;
+  });
+
+  // ---- Scroll reveal + stagger (mismo mecanismo que las propuestas) ----
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealTargets = document.querySelectorAll('.reveal, .stagger-group');
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach(function(el){ el.classList.add('is-visible'); });
+  } else {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    revealTargets.forEach(function(el){ observer.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>

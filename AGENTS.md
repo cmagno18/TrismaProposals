@@ -1,8 +1,19 @@
 # Instrucciones para agentes — Proyecto TrismaProposals
 
-Este repositorio genera páginas web de propuestas comerciales para
-Trisma Soluciones, siempre duplicando y rellenando la plantilla base
-[`plantilla_propuestas.html`](plantilla_propuestas.html).
+Este repositorio contiene dos tipos de página:
+
+- [`index.html`](index.html): la página principal pública de Trisma
+  Soluciones (`https://trismasoluciones.netlify.app/`) — presentación
+  de la firma, portafolio, perfiles de cliente y CTA de contacto.
+  Es una página fija, no se duplica ni tiene placeholders `[VARIABLE]`.
+- Propuestas comerciales para clientes específicos, siempre duplicando
+  y rellenando la plantilla base
+  [`plantilla_propuestas.html`](plantilla_propuestas.html).
+
+Ambas comparten el mismo Design System (tipografías, colores,
+animaciones de scroll) para que se sientan parte de un mismo sitio.
+Si se ajusta el diseño de una, evaluar si el ajuste también aplica a
+la otra.
 
 ## Tratamiento formal ("usted")
 
