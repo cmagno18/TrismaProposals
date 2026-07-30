@@ -4,6 +4,16 @@ Este repositorio genera páginas web de propuestas comerciales para
 Trisma Soluciones, siempre duplicando y rellenando la plantilla base
 [`plantilla_propuestas.html`](plantilla_propuestas.html).
 
+## Tratamiento formal ("usted")
+
+Todo el texto dirigido al cliente — tanto el de la plantilla como el
+que se redacta al llenar los placeholders — debe usar siempre la
+forma formal "usted" (y sus derivados: "su", "sus", conjugaciones de
+tercera persona). Nunca usar "tú"/"vos" ni sus conjugaciones o
+posesivos ("tu", "tus", "te", "recuperas", "buscas", etc.). Revisar
+esto también en el contenido generado por IA (párrafos, diferenciadores,
+notas), no solo en los textos fijos de la plantilla.
+
 ## Cómo crear una nueva propuesta
 
 La forma recomendada es invocar el skill
@@ -134,11 +144,22 @@ interno: el botón del hero ya apunta a la sección 04, no a la 07.
 
 ## Nota de esquema por comisión (sección 07)
 
-`[NOTA_ESQUEMA_COMISION]` es opcional: solo se incluye si el esquema
-comercial es 100% comisión sobre recaudo (sin costo fijo inicial). Si
-el esquema tiene un componente fijo/setup, se omite el bloque
-completo — no adaptar el texto, ya que asume que no hay barrera de
-presupuesto inicial.
+`[NOTA_ESQUEMA_COMISION]` es opcional, pero se incluye siempre que el
+esquema tenga un componente de comisión sobre recaudo (puro o mixto).
+Texto base (esquema 100% comisión, sin costo fijo inicial):
+
+> "Nuestro modelo comercial se basa principalmente en una comisión
+> sobre el éxito del recaudo. Solo ganamos si usted recupera su
+> dinero. Eliminamos las barreras de presupuesto inicial, convirtiendo
+> a Trisma en un socio que autofinancia su operación."
+
+Si el esquema es **mixto** (hay un costo fijo/setup además de la
+comisión), adaptar solo la última frase para no afirmar algo falso —
+ej. "...Descontando la inversión inicial fija, solo ganamos si usted
+recupera su dinero. Esto convierte a Trisma en un socio que
+autofinancia gran parte de su operación." Se omite el bloque completo
+únicamente si el esquema es 100% fijo/retainer, sin ningún componente
+de comisión sobre recaudo.
 
 ## Despliegue
 

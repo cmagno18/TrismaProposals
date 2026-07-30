@@ -30,11 +30,11 @@
                                  el título queda "Propuesta Preliminar
                                  de..." en ese caso
 
-  02. Entendimos lo que buscas
+  02. Entendimos lo que busca
       [PARRAFO_ENTENDIMIENTO]   Párrafo único que resume el contexto,
                                  deseos y dolores del cliente
 
-  03. Nuestra visión para tu proyecto
+  03. Nuestra visión para su proyecto
       [PARRAFO_VISION]          Párrafo único de propuesta de valor
       (la imagen de esta sección es fija — img/Imagen_01.jpg — y no es
       un placeholder; ver nota junto a <div class="vision-media">)
@@ -56,9 +56,10 @@
   07. Inversión
       [PRECIO]                  Cifra/rango de inversión
       [FORMA_DE_PAGO]           Condiciones y esquema de pago
-      [NOTA_ESQUEMA_COMISION]   (Opcional) Solo si el esquema es 100%
-                                 comisión sobre recaudo, sin costo fijo
-                                 inicial — omitir el bloque completo si no
+      [NOTA_ESQUEMA_COMISION]   (Opcional) Si el esquema incluye comisión
+                                 sobre recaudo (puro o mixto); ver la nota
+                                 junto a <div class="investment-commission-note">
+                                 para el texto base y su variante mixta
 
       Si [PRECIO] es 0, esta sección 07 completa se omite del archivo
       generado (ver nota junto a <section id="inversion">).
@@ -427,6 +428,7 @@
   .vision-media img{
     position:absolute;
     inset:-10% -10%;
+    max-width:none;
     width:120%;
     height:120%;
     object-fit:cover;
@@ -913,13 +915,13 @@
 </header>
 
 <!-- =========================================================
-     02. ENTENDIMOS LO QUE BUSCAS
+     02. ENTENDIMOS LO QUE BUSCA
 ========================================================= -->
 <section class="understanding" id="entendimiento">
   <div class="wrap">
     <div class="reveal">
       <div class="section-number">02 · Entendimiento</div>
-      <h2 class="section-title">Entendimos lo que buscas</h2>
+      <h2 class="section-title">Entendimos lo que busca</h2>
     </div>
     <div class="panel reveal">
       <!-- Párrafo único: resume el contexto, deseos y dolores del cliente -->
@@ -929,13 +931,13 @@
 </section>
 
 <!-- =========================================================
-     03. NUESTRA VISIÓN PARA TU PROYECTO
+     03. NUESTRA VISIÓN PARA SU PROYECTO
 ========================================================= -->
 <section class="vision on-dark" id="vision">
   <div class="wrap">
     <div class="reveal">
       <div class="section-number">03 · Visión</div>
-      <h2 class="section-title">Nuestra visión para tu proyecto</h2>
+      <h2 class="section-title">Nuestra visión para su proyecto</h2>
     </div>
     <div class="vision-grid">
       <div class="vision-text reveal">
@@ -1087,7 +1089,7 @@
     <div class="reveal">
       <div class="section-number">07 · Inversión</div>
       <span class="eyebrow">La propuesta en números</span>
-      <h2 class="section-title" style="margin:0 auto;">Tu inversión</h2>
+      <h2 class="section-title" style="margin:0 auto;">Su inversión</h2>
     </div>
 
     <div class="investment-card reveal" id="investmentCard">
@@ -1099,9 +1101,21 @@
         <!-- Ej: % al inicio + saldo por hitos, o esquema a resultados (% sobre recaudo) -->
         [FORMA_DE_PAGO]
       </div>
-      <!-- Opcional: incluir SOLO si el esquema comercial es 100% comisión
-           sobre recaudo (sin costo fijo inicial). Omitir todo este bloque
-           si hay un componente fijo/setup en el esquema. -->
+      <!-- Opcional: incluir siempre que el esquema tenga un componente de
+           comisión sobre recaudo (puro o mixto). Base de texto (esquema
+           100% comisión, sin costo fijo inicial):
+             "Nuestro modelo comercial se basa principalmente en una
+             comisión sobre el éxito del recaudo. Solo ganamos si usted
+             recupera su dinero. Eliminamos las barreras de presupuesto
+             inicial, convirtiendo a Trisma en un socio que autofinancia
+             su operación."
+           Si el esquema es MIXTO (hay un costo fijo/setup además de la
+           comisión), adaptar solo la última frase para no afirmar algo
+           falso, ej: "...Descontando la inversión inicial fija, solo
+           ganamos si usted recupera su dinero. Esto convierte a Trisma
+           en un socio que autofinancia gran parte de su operación."
+           Omitir todo este bloque solo si el esquema es 100% fijo/retainer,
+           sin ningún componente de comisión sobre recaudo. -->
       <div class="investment-commission-note">
         [NOTA_ESQUEMA_COMISION]
       </div>
