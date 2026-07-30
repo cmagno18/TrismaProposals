@@ -74,7 +74,7 @@
   .section-lead{
     margin-top:16px;
     font-size:18px;
-    max-width:640px;
+    max-width:900px;
   }
   .on-dark .section-lead{color:var(--white-70);}
 
@@ -349,8 +349,10 @@
     margin-top:44px;
   }
   .trust-card{
-    padding:28px;
+    background:var(--surface);
+    padding:26px 28px;
     border:1px solid var(--border-1);
+    border-left:3px solid var(--gold);
     border-radius:var(--radius);
     transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
@@ -359,12 +361,14 @@
     box-shadow:0 16px 32px -18px rgba(10,37,64,0.22);
     border-color:var(--gold-soft);
   }
-  .icon-dot{
-    width:38px; height:38px;
-    border-radius:50%;
-    background:rgba(227,179,65,0.12);
-    border:1px solid var(--gold-soft);
-    margin-bottom:16px;
+  .trust-index{
+    display:block;
+    font-family:'Poppins', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    color:var(--gold);
+    margin-bottom:10px;
   }
   .trust-card h3{
     font-size:16.5px;
@@ -605,17 +609,17 @@
     </div>
     <div class="trust-grid stagger-group reveal">
       <div class="trust-card">
-        <div class="icon-dot"></div>
+        <span class="trust-index">01</span>
         <h3>Mediación Ética y Preservación de Marca</h3>
         <p>Actuamos como un tercero neutral: gestionamos su cartera sin desgastar la relación con sus clientes, arrendatarios o copropietarios.</p>
       </div>
       <div class="trust-card">
-        <div class="icon-dot"></div>
+        <span class="trust-index">02</span>
         <h3>Tecnología de Scoring e IA</h3>
         <p>Priorizamos la cartera con modelos de comportamiento de pago, para enfocar el esfuerzo de cobro donde realmente hay probabilidad de recuperación.</p>
       </div>
       <div class="trust-card">
-        <div class="icon-dot"></div>
+        <span class="trust-index">03</span>
         <h3>Modelo Orientado a Resultados</h3>
         <p>Nuestro modelo de comisión sobre recaudo alinea nuestros intereses con los suyos: nuestra remuneración depende principalmente del éxito de la gestión.</p>
       </div>
