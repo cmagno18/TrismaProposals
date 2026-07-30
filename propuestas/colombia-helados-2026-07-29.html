@@ -1065,7 +1065,20 @@
     <p class="closing-lead reveal">Colombia Helados ya tiene el negocio en marcha; nosotros nos encargamos de que la cartera deje de frenarlo. Empecemos a convertir esa cartera pendiente en caja disponible.</p>
 
     <div class="closing-cta reveal">
-      <a href="https://wa.me/573028337824" class="btn btn-gold" target="_blank" rel="noopener">Quiero agendar una llamada</a>
+      <!-- Enlace de WhatsApp fijo de Trisma: no es un placeholder, no cambia por propuesta.
+           El mensaje prellenado (?text=) se arma con JS a partir de data-client-name en <body>,
+           así queda correctamente codificado para la URL sin necesitar un placeholder aparte. -->
+      <a id="whatsapp-cta" href="https://wa.me/573028337824" class="btn btn-gold" target="_blank" rel="noopener">Quiero agendar una llamada</a>
+      <script>
+      (function(){
+        "use strict";
+        var link = document.getElementById('whatsapp-cta');
+        var clientName = (document.body.getAttribute('data-client-name') || '').trim();
+        if (!link || !clientName) { return; }
+        var message = 'Hola, he revisado la propuesta comercial de Trisma para ' + clientName + ' y quisiera agendar una llamada para conversar los próximos pasos.';
+        link.href = 'https://wa.me/573028337824?text=' + encodeURIComponent(message);
+      })();
+      </script>
     </div>
 
     <div class="closing-footer reveal">

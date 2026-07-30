@@ -104,7 +104,7 @@ Espera la respuesta. Si pide cambios, ajústalos y vuelve a confirmar. Solo con 
 
 1. Lee `plantilla_propuestas.html` completo, incluyendo el comentario inicial que lista todos los placeholders disponibles.
 2. Completa cada `[VARIABLE]` con la información validada: `[NOMBRE_CLIENTE]`, `[NOMBRE_PROYECTO]`, `[FECHA]`, `[PARRAFO_ENTENDIMIENTO]`, `[PARRAFO_VISION]`, `[LISTA_ALCANCE]`, `[LISTA_EXCLUSIONES]`, `[FASES]`, `[NOTA_TIEMPOS]`, `[PRECIO]`, `[FORMA_DE_PAGO]`, `[DIFERENCIADOR_1/2/3]`, `[GARANTIA]`, `[PARRAFO_CIERRE]`, `[TEXTO_CTA]`, `[NOMBRE_EMPRESA]`, `[CONTACTO]`, y cualquier otro que exista en la plantilla — no dejes ninguno sin reemplazar.
-3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`), el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación que va justo después — ese script ya está en la plantilla y **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro del atributo `data-client-name`**, no reescribir ni duplicar el script.
+3. **No toques lo que ya es fijo**: el enlace de WhatsApp del CTA final (`https://wa.me/573028337824`) y el `<script>` justo después que arma su mensaje prellenado, el bloque "Ecosistema de Capacidades Trisma" de la sección 04, el Design System (tipografías, colores, animaciones), y el `<body data-client-name="...">` junto con el `<script>` de notificación de Telegram que va justo después — esos dos scripts ya están en la plantilla y ambos leen el nombre del cliente del mismo atributo `data-client-name`, así que **solo debes reemplazar `[NOMBRE_CLIENTE]` dentro de ese atributo**, no reescribir ni duplicar ninguno de los dos scripts.
 4. Guarda el archivo en `propuestas/<nombre-cliente-slug>-<yyyy-mm-dd>.html`, donde el slug es el nombre del cliente en minúsculas separado por guiones y la fecha es la fecha de creación de la propuesta en formato `yyyy-mm-dd`. Ejemplo: propuesta para "Banco ABC" creada el 29 de julio de 2026 → `propuestas/banco-abc-2026-07-29.html`. Crea la carpeta `propuestas/` si no existe.
 
 ## 6. Notificaciones por Telegram
@@ -113,7 +113,7 @@ Hay dos notificaciones independientes — no las confundas:
 
 **a) Notificación de "propuesta creada"** (la envías tú, el agente, justo después de guardar el archivo en el paso anterior — ocurre en tu máquina local, antes de cualquier deploy):
 ```
-node --env-file=.env scripts/telegram-notify.js "Propuesta creada: [Nombre Cliente] | [fecha yyyy-mm-dd] | propuestas/[archivo].html"
+node --env-file=.env scripts/telegram-notify.js "Propuesta creada: [Nombre Cliente] | Fecha creación: [fecha yyyy-mm-dd] | Propuesta: propuestas/[archivo].html"
 ```
 Ejecútalo siempre, sin preguntar — es parte obligatoria de terminar el skill. Si falla (por ejemplo, `TELEGRAM_BOT_TOKEN` vacío en `.env`), avisa al usuario pero no bloquees la entrega de la propuesta por eso.
 

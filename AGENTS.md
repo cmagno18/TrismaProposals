@@ -26,7 +26,19 @@ resultado:
 4. **No modificar la estructura, los títulos de sección, los textos
    de interfaz, ni los elementos marcados como fijos** (el bloque
    "Ecosistema de Capacidades Trisma", el enlace de WhatsApp del CTA
-   final, ni el script de notificación de Telegram).
+   final y su script de mensaje prellenado, ni el script de
+   notificación de Telegram).
+
+## CTA final de WhatsApp
+
+El botón `[TEXTO_CTA]` de la sección 09 enlaza siempre a
+`https://wa.me/573028337824` (número fijo de Trisma, no es un
+placeholder). Un `<script>` justo después del botón arma el mensaje
+prellenado de WhatsApp ("Hola, he revisado la propuesta comercial de
+Trisma para [nombre] y quisiera agendar una llamada...") tomando el
+nombre del cliente del mismo `data-client-name` que usa la
+notificación de Telegram — no crear un placeholder nuevo para esto,
+y no tocar este script al duplicar la plantilla.
 
 ## Feature obligatorio: notificaciones por Telegram
 
