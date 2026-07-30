@@ -491,6 +491,13 @@
     border-radius:var(--radius);
     padding:22px 20px;
     border:1px solid var(--navy);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  .pillar:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px -18px rgba(0,0,0,0.45);
+    border-color:var(--gold-soft);
+    background:var(--navy-soft);
   }
   .pillar .pillar-index{
     font-family:'Poppins', sans-serif;
