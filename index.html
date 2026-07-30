@@ -344,7 +344,11 @@
   .trust{background:var(--white);}
   .trust-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    /* Siempre son exactamente 3 tarjetas: columnas fijas para que se
+       repartan el ancho completo de la fila en vez de dejar una
+       columna vacía "fantasma" (lo que las hacía ver más angostas
+       que las de otras secciones con auto-fill). */
+    grid-template-columns:repeat(3, 1fr);
     gap:22px;
     margin-top:44px;
   }
@@ -437,6 +441,9 @@
   .site-footer .meta a{color:var(--white-70); text-decoration:none;}
   .site-footer .meta a:hover{color:var(--gold);}
 
+  @media (max-width:760px){
+    .trust-grid{grid-template-columns:1fr;}
+  }
   @media (max-width:640px){
     section{padding:64px 0;}
   }
