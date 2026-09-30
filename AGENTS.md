@@ -87,14 +87,15 @@ intactos, los siguientes dos elementos:**
 - El `<script>` ubicado justo después de `<body>` que hace `fetch`
   a `/.netlify/functions/notify-telegram` al cargar la página,
   enviando el nombre del cliente, la fecha/hora (generada en el
-  navegador del cliente) y la ruta (`window.location.pathname`).
+  navegador del cliente), la ruta (`window.location.pathname`),
+  resolución de pantalla, procedencia (*referrer*) y `userAgent`.
 
 Este script llama a la función serverless
 [`netlify/functions/notify-telegram.js`](netlify/functions/notify-telegram.js),
-que arma y envía el mensaje a Telegram (cliente, fecha y hora, y
-ruta de la propuesta) usando las variables de entorno
-`TELEGRAM_BOT_TOKEN` y `TELEGRAM_USER_ID` (fijas para todas las
-propuestas — no se deben pedir ni sobrescribir por cliente).
+que arma y envía el mensaje a Telegram con hipervínculo directo a Netlify,
+IP y geolocalización del visitante, dispositivo/pantalla y procedencia,
+usando las variables de entorno `TELEGRAM_BOT_TOKEN` y `TELEGRAM_USER_ID`
+(fijas para todas las propuestas — no se deben pedir ni sobrescribir por cliente).
 
 No se debe implementar el envío del mensaje directamente desde el
 navegador (expondría el Bot Token). Siempre debe pasar por la
@@ -107,7 +108,7 @@ debe notificar de inmediato desde la máquina local (no depende de
 Netlify ni de que el cliente abra la página):
 
 ```bash
-node --env-file=.env scripts/telegram-notify.js "Propuesta creada: [Nombre Cliente] | [yyyy-mm-dd] | propuestas/[archivo].html"
+node --env-file=.env scripts/telegram-notify.js "🚀 <b>Propuesta Creada</b>\n<b>Cliente:</b> [Nombre Cliente]\n<b>Fecha creación:</b> [fecha yyyy-mm-dd]\n<b>Propuesta:</b> [Propuesta Comercial — [Nombre Cliente]](https://trismasoluciones.netlify.app/propuestas/[archivo].html)"
 ```
 
 ## Variables de entorno

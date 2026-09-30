@@ -9,9 +9,9 @@
 
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
 const chatId = process.env.TELEGRAM_USER_ID;
-const text = process.argv[2];
+const rawText = process.argv[2];
 
-if (!text) {
+if (!rawText) {
   console.error('Uso: node --env-file=.env scripts/telegram-notify.js "texto del mensaje"');
   process.exit(1);
 }
@@ -21,11 +21,20 @@ if (!botToken || !chatId) {
   process.exit(1);
 }
 
+const text = rawText
+  .replace(/\\n/g, '\n')
+  .replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, "<a href='$2'>$1</a>");
+
 async function main() {
   const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: chatId, text: text }),
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: text,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true
+    }),
   });
 
   if (!response.ok) {

@@ -140,11 +140,11 @@ Hay dos notificaciones independientes — no las confundas:
 
 **a) Notificación de "propuesta creada"** (la envías tú, el agente, justo después de guardar el archivo en el paso anterior — ocurre en tu máquina local, antes de cualquier deploy):
 ```
-node --env-file=.env scripts/telegram-notify.js "Propuesta creada: [Nombre Cliente] | Fecha creación: [fecha yyyy-mm-dd] | Propuesta: propuestas/[archivo].html"
+node --env-file=.env scripts/telegram-notify.js "🚀 <b>Propuesta Creada</b>\n<b>Cliente:</b> [Nombre Cliente]\n<b>Fecha creación:</b> [fecha yyyy-mm-dd]\n<b>Propuesta:</b> [Propuesta Comercial — [Nombre Cliente]](https://trismasoluciones.netlify.app/propuestas/[archivo].html)"
 ```
 Ejecútalo siempre, sin preguntar — es parte obligatoria de terminar el skill. Si falla (por ejemplo, `TELEGRAM_BOT_TOKEN` vacío en `.env`), avisa al usuario pero no bloquees la entrega de la propuesta por eso.
 
-**b) Notificación de "propuesta abierta"** (frontend, ya resuelta por la arquitectura del proyecto — no requiere que hagas nada adicional): el `<script>` heredado de la plantilla, más la función serverless `netlify/functions/notify-telegram.js`, se disparan solos cada vez que el cliente abre el HTML en su navegador, e incluyen nombre del cliente, fecha/hora exacta y la ruta del archivo. Tu única responsabilidad es no romper ese script al duplicar la plantilla (ver paso 5.3).
+**b) Notificación de "propuesta abierta"** (frontend, ya resuelta por la arquitectura del proyecto — no requiere que hagas nada adicional): el `<script>` heredado de la plantilla, más la función serverless `netlify/functions/notify-telegram.js`, se disparan solos cada vez que el cliente abre el HTML en su navegador, e incluyen nombre del cliente, fecha/hora exacta, hipervínculo directo de Netlify, IP y ubicación geográfica, tipo de dispositivo/pantalla y origen. Tu única responsabilidad es no romper ese script al duplicar la plantilla (ver paso 5.3).
 
 ## 7. Commit, push y URL de Netlify
 

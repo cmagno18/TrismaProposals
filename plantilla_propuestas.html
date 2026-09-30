@@ -888,7 +888,10 @@
     body: JSON.stringify({
       clientName: clientName,
       slug: window.location.pathname.replace(/^\//, ''),
-      timestamp: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
+      timestamp: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }),
+      screen: (window.screen ? (window.screen.width + 'x' + window.screen.height) : ''),
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent || ''
     }),
     keepalive: true
   }).catch(function(){ /* best-effort: no debe afectar la carga de la página */ });
